@@ -17,6 +17,7 @@ namespace CourseManagement.Endpoints.CreateCourse
                 LengthInDays = e.LengthInDays,
                 Name = e.Name,
                 UserId = e.UserId,
+                
             };
         }
 
@@ -31,6 +32,8 @@ namespace CourseManagement.Endpoints.CreateCourse
                 LengthInDays = r.LengthInDays,
                 Name = r.Name,
                 UserId = r.UserId,
+                IsDeleted = false,
+                IsHidden = false,
             };
         }
     }

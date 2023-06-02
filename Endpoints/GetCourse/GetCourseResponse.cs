@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CourseManagement.Models
+﻿namespace CourseManagement.Endpoints.GetCourse
 {
-    public class Course
+    public class GetCourseResponse
     {
-        [Key]
         public int Id { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
@@ -13,8 +10,5 @@ namespace CourseManagement.Models
         public int LengthInDays { get; set; }
         public bool GrantsCertificate { get; set; }
         public decimal CertificatePrice { get; set; }
-        public bool IsHidden { get; set; }
-        public bool IsDeleted { get; set; }
-
     }
 }

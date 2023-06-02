@@ -6,11 +6,11 @@ namespace CourseManagement.Endpoints.CreateCourse
     {
         [FromClaim("UserId")]
         public int UserId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal CoursePrice { get; set; }
-        public int LengthInDays { get; set; }
-        public bool GrantsCertificate { get; set; }
-        public decimal CertificatePrice { get; set; }
+        public required string Name { get; set; }
+        public required string Description { get; set; }
+        public required decimal CoursePrice { get; set; }
+        public required int LengthInDays { get; set; }
+        public required bool GrantsCertificate { get; set; }
+        public required decimal CertificatePrice { get; set; }
     }
 }
