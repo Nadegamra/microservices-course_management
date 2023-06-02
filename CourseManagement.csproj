@@ -28,4 +28,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Endpoints\GetUserCourse\" />
+    <Folder Include="Endpoints\GetUserCourseList\" />
+    <Folder Include="Endpoints\UpdateCourse\" />
+  </ItemGroup>
+
 </Project>

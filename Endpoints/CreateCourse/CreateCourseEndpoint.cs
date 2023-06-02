@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.CreateCourse
     {
         public override void Configure()
         {
-            Post("courses/create");
+            Post("courses");
             Roles("CREATOR");
         }
 

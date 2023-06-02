@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.GetCourse
     {
         public override void Configure()
         {
-            Get("courses/get/{id}");
+            Get("courses/{id}");
             AllowAnonymous();
         }
 
@@ -27,7 +27,7 @@ namespace CourseManagement.Endpoints.GetCourse
                 return;
             }
             Response = Map.FromEntity(course);
-            await SendOkAsync(Response);
+            await SendOkAsync(Response, ct);
         }
     }
 }
