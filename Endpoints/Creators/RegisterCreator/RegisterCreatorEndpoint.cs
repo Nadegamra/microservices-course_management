@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.Creators.RegisterCreator
     {
         public override void Configure()
         {
-            Post("creators/register");
+            Post("creator");
             Roles("CREATOR");
         }
 
@@ -24,6 +24,7 @@ namespace CourseManagement.Endpoints.Creators.RegisterCreator
             if(creator != null)
             {
                 await SendErrorsAsync(418, ct);
+                return;
             }
 
             Creator newCreator = Map.ToEntity(req);
