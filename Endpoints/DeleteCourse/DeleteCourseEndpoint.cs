@@ -19,7 +19,7 @@ namespace CourseManagement.Endpoints.DeleteCourse
 
         public override async Task HandleAsync(DeleteCourseRequest req, CancellationToken ct)
         {
-            Course course = courseDbContext.Courses.Where(x=>x.Id == req.Id).FirstOrDefault();
+            Course? course = courseDbContext.Courses.Where(x=>x.Id == req.Id).FirstOrDefault();
             if(course == null || course.UserId != req.UserId)
             {
                 await SendErrorsAsync(400, ct);
