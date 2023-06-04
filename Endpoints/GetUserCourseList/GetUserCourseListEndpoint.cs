@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.GetUserCourseList
     {
         public override void Configure()
         {
-            base.Configure();
+            Get("courses/owned");
         }
 
         private readonly CourseDbContext courseDbContext;
