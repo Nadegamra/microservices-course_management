@@ -4,6 +4,9 @@ using FastEndpoints.Security;
 using CourseManagement;
 using Microsoft.EntityFrameworkCore;
 using CourseManagement.Properties;
+using CourseManagement.IntegrationEvents.Handlers;
+using CourseManagement.IntegrationEvents.Events;
+using Services.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,16 +15,24 @@ var services = builder.Services;
 {
     services.AddCors();
 
+    // FastEndpoints
     services.AddFastEndpoints();
     services.AddJWTBearerAuth(builder.Configuration["JwtSecret"]);
     services.AddSwaggerDoc();
 
+    // Configuration
     services.Configure<IPConfig>(builder.Configuration.GetSection("IP"));
 
-
-    string connectionString = builder.Configuration.GetSection("Database")["ConnectionString"];// Change to "MigrationConnection" when updating the database
+    // Database
+    string connectionString = builder.Configuration.GetSection("Database")["ConnectionString"];
     services.AddDbContext<CourseDbContext>(options =>
         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+    // Event Bus
+    ConfigureServices.AddEventBus(builder);
+
+    builder.Services.AddTransient<UserEmailChangedIntegrationEventHandler>();
+    builder.Services.AddTransient<UserNameChangedIntegrationEventHandler>();
 }
 var app = builder.Build();
 {
@@ -37,5 +48,9 @@ var app = builder.Build();
     app.UseFastEndpoints();
 
     app.UseSwaggerGen();
+
+    var eventBus = app.Services.GetRequiredService<Infrastructure.EventBus.Generic.IEventBus>();
+    eventBus.Subscribe<UserEmailChangedIntegrationEvent, UserEmailChangedIntegrationEventHandler>();
+    eventBus.Subscribe<UserNameChangedIntegrationEvent, UserNameChangedIntegrationEventHandler>();
 }
 app.Run();
