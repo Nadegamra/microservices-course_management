@@ -34,4 +34,16 @@
 		<ProjectReference Include="..\Services.Common\Services.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Endpoints\CourseRequirements\" />
+	  <Folder Include="Endpoints\GainedSkills\" />
+	  <Folder Include="Endpoints\CourseLanguages\" />
+	  <Folder Include="Endpoints\CourseSubtitles\" />
+	  <Folder Include="Endpoints\Skills\CreateSkill\" />
+	  <Folder Include="Endpoints\Skills\GetSkill\" />
+	  <Folder Include="Endpoints\Skills\GetSkillList\" />
+	  <Folder Include="Endpoints\Skills\RemoveSkill\" />
+	  <Folder Include="Endpoints\Skills\UpdateSkill\" />
+	</ItemGroup>
+
 </Project>

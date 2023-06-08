@@ -8,9 +8,12 @@ namespace CourseManagement.Endpoints.Courses.CreateCourse
         public CreateCourseRequestValidator()
         {
             RuleFor(x => x.UserId).GreaterThanOrEqualTo(1);
-            RuleFor(x => x.CoursePrice).GreaterThanOrEqualTo(0);
             RuleFor(x => x.LengthInDays).GreaterThanOrEqualTo(1);
+            RuleFor(x => x.Price).GreaterThanOrEqualTo(0);
             RuleFor(x => x.CertificatePrice).GreaterThanOrEqualTo(0);
+            RuleFor(x => x.ActivityFormat).IsInEnum();
+            RuleFor(x => x.ScheduleType).IsInEnum();
+            RuleFor(x => x.Difficulty).IsInEnum();
         }
     }
 }

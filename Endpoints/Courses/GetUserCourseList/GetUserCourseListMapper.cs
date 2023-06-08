@@ -10,13 +10,21 @@ namespace CourseManagement.Endpoints.Courses.GetUserCourseList
             return e.Select(x => new GetUserCourseListResponse
             {
                 Id = x.Id,
-                CertificatePrice = x.CertificatePrice,
-                CoursePrice = x.CoursePrice,
-                Description = x.Description,
-                GrantsCertificate = x.GrantsCertificate,
-                LengthInDays = x.LengthInDays,
-                Name = x.Name,
                 UserId = x.UserId,
+                Name = x.Name,
+                ShortDescription = x.ShortDescription,
+                DetailedDescription = x.DetailedDescription,
+                LengthInDays = x.LengthInDays,
+                Price = x.Price,
+                GrantsCertificate = x.GrantsCertificate,
+                CertificatePrice = x.CertificatePrice,
+                ActivityFormat = x.ActivityFormat,
+                ScheduleType = x.ScheduleType,
+                Difficulty = x.Difficulty,
+                GainedSkills = x.GainedSkills,
+                Languages = x.Languages,
+                Requirements = x.Requirements,
+                Subtitles = x.Subtitles,
                 IsHidden = x.IsHidden,
             }).ToArray();
         }

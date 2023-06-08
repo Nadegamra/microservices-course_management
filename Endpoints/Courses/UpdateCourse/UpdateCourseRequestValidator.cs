@@ -11,7 +11,7 @@ namespace CourseManagement.Endpoints.Courses.UpdateCourse
 
             RuleFor(x => x.UserId).GreaterThanOrEqualTo(1);
 
-            RuleFor(x => x.CoursePrice).GreaterThanOrEqualTo(0).Custom((price, ctx) =>
+            RuleFor(x => x.Price).GreaterThanOrEqualTo(0).Custom((price, ctx) =>
             {
                 if (price * 100 % 1 > 0)
                 {
@@ -28,6 +28,10 @@ namespace CourseManagement.Endpoints.Courses.UpdateCourse
                     ctx.AddFailure("Price must not have more than 2 decimal places");
                 }
             });
+
+            RuleFor(x => x.ActivityFormat).IsInEnum();
+            RuleFor(x=>x.ScheduleType).IsInEnum();
+            RuleFor(x=>x.Difficulty).IsInEnum();
         }
     }
 }

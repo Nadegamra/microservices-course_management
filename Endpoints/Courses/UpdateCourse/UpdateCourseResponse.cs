@@ -1,14 +1,26 @@
-﻿namespace CourseManagement.Endpoints.Courses.UpdateCourse
+﻿using CourseManagement.Enums;
+using CourseManagement.Models;
+
+namespace CourseManagement.Endpoints.Courses.UpdateCourse
 {
     public class UpdateCourseResponse
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
         public required string Name { get; set; }
-        public required string Description { get; set; }
-        public required decimal CoursePrice { get; set; }
-        public required int LengthInDays { get; set; }
-        public required bool GrantsCertificate { get; set; }
-        public required decimal CertificatePrice { get; set; }
-        public required bool IsHidden { get; set; }
+        public required string ShortDescription { get; set; }
+        public required string DetailedDescription { get; set; }
+        public int LengthInDays { get; set; }
+        public decimal Price { get; set; }
+        public bool GrantsCertificate { get; set; }
+        public decimal CertificatePrice { get; set; }
+        public ActivityFormat ActivityFormat { get; set; }
+        public ScheduleType ScheduleType { get; set; }
+        public Difficulty Difficulty { get; set; }
+        public ICollection<CourseRequirement>? Requirements { get; set; }
+        public ICollection<GainedSkill>? GainedSkills { get; set; }
+        public ICollection<CourseLanguage>? Languages { get; set; }
+        public ICollection<CourseSubtitle>? Subtitles { get; set; }
+        public bool IsHidden { get; set; }
     }
 }
