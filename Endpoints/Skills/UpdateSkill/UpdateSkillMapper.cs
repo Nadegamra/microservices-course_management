@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace CourseManagement.Endpoints.Skills.UpdateSkill
 {
-    public class UpdateSkillMapper: ResponseMapper<UpdateSkillResponse, Skill>
+    public class UpdateSkillMapper: Mapper<UpdateSkillRequest, UpdateSkillResponse, Skill>
     {
         public override UpdateSkillResponse FromEntity(Skill e)
         {

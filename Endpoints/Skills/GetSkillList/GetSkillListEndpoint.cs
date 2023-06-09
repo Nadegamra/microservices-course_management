@@ -20,7 +20,7 @@ namespace CourseManagement.Endpoints.Skills.GetSkillList
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            List<Skill> skills = courseDbContext.Skills.Where(x=>!x.IsDeleted).ToList();
+            List<Skill> skills = courseDbContext.Skills.ToList();
             Response = Map.FromEntity(skills);
             await SendOkAsync(Response, ct);
         }

@@ -20,7 +20,7 @@ namespace CourseManagement.Endpoints.Skills.GetSkill
 
         public override async Task HandleAsync(GetSkillRequest req, CancellationToken ct)
         {
-            Skill? skill = courseDbContext.Skills.Where(x=>x.Id == req.Id && !x.IsDeleted).FirstOrDefault();
+            Skill? skill = courseDbContext.Skills.Where(x=>x.Id == req.Id).FirstOrDefault();
             if (skill == null)
             {
                 await SendErrorsAsync(418, ct);

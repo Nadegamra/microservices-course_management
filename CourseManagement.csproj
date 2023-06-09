@@ -35,15 +35,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Endpoints\CourseRequirements\" />
-	  <Folder Include="Endpoints\GainedSkills\" />
-	  <Folder Include="Endpoints\CourseLanguages\" />
-	  <Folder Include="Endpoints\CourseSubtitles\" />
-	  <Folder Include="Endpoints\Skills\CreateSkill\" />
-	  <Folder Include="Endpoints\Skills\GetSkill\" />
-	  <Folder Include="Endpoints\Skills\GetSkillList\" />
-	  <Folder Include="Endpoints\Skills\RemoveSkill\" />
-	  <Folder Include="Endpoints\Skills\UpdateSkill\" />
+	  <Folder Include="Endpoints\CourseLanguages\CourseLanguageCreate\" />
+	  <Folder Include="Endpoints\CourseLanguages\CourseLanguageDelete\" />
+	  <Folder Include="Endpoints\CourseLanguages\CourseLanguageUpdate\" />
+	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementCreate\" />
+	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementDelete\" />
+	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementUpdate\" />
+	  <Folder Include="Endpoints\CourseSubtitles\CourseSubtitleCreate\" />
+	  <Folder Include="Endpoints\CourseSubtitles\CourseSubtitleDelete\" />
+	  <Folder Include="Endpoints\CourseSubtitles\CourseSubtitleUpdate\" />
 	</ItemGroup>
 
 </Project>
