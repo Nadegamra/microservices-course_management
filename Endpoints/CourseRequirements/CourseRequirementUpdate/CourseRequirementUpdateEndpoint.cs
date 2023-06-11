@@ -22,7 +22,7 @@ namespace CourseManagement.Endpoints.CourseRequirements.CourseRequirementUpdate
             Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
             CourseRequirement? requirement = courseDbContext.CourseRequirements.Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
 
-            if (course == null || requirement == null)
+            if (course == null || requirement == null || requirement.SkillId != null)
             {
                 await SendErrorsAsync(400, ct);
                 return;

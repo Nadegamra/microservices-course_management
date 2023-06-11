@@ -2,6 +2,6 @@
 {
     public class DeleteSkillRequest
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
     }
 }

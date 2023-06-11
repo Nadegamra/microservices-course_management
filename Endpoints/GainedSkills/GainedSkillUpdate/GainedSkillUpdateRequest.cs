@@ -6,7 +6,7 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillUpdate
     {
         [FromClaim("UserId")]
         public int UserId { get; set; }
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string CustomDescription { get; set; }
     }
 }

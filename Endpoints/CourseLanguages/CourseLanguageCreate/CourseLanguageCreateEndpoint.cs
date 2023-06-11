@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.CourseLanguages.CourseLanguageCreate
     {
         public override void Configure()
         {
-            Post("courses/{CourseId}/languages");
+            Post("courses/{courseId}/languages");
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -23,7 +23,7 @@ namespace CourseManagement.Endpoints.CourseLanguages.CourseLanguageCreate
             Course? course = courseDbContext.Courses.Where(x=>x.Id == newLanguage.CourseId && x.UserId == req.UserId).FirstOrDefault();
             if(course == null || courseDbContext.CourseLanguages.Where(x=>x.Language == newLanguage.Language && x.CourseId == newLanguage.CourseId).Any())
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

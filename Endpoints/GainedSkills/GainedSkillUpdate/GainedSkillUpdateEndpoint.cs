@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillUpdate
     {
         public override void Configure()
         {
-            Post("courses/gained/{id}");
+            Post("courses/{courseId}/gained/{id}");
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -22,7 +22,7 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillUpdate
             GainedSkill? skill = courseDbContext.GainedSkills.Where(x => x.Id == req.Id && x.SkillId == null).FirstOrDefault();
             if (skill == null || !courseDbContext.Courses.Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

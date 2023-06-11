@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillCreate
     {
         public override void Configure()
         {
-            Post("courses/gained/{CourseId}");
+            Post("courses/{courseId}/gained");
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -20,9 +20,10 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillCreate
         public override async Task HandleAsync(GainedSkillCreateRequest req, CancellationToken ct)
         {
             if (!courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).Any() ||
-                courseDbContext.GainedSkills.Where(x => req.SkillId != null && x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any())
+                courseDbContext.GainedSkills.Where(x => req.SkillId != null && x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any()
+                || (req.SkillId != null && req.CustomDescription != null))
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

@@ -6,6 +6,7 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillDelete
     {
         [FromClaim("UserId")]
         public int UserId { get; set; }
+        public int CourseId { get; set; }
         public int Id { get; set; }
     }
 }

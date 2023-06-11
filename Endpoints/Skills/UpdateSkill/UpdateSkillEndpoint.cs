@@ -23,12 +23,12 @@ namespace CourseManagement.Endpoints.Skills.UpdateSkill
             Skill? skill = courseDbContext.Skills.Where(x=>x.Id == req.Id).FirstOrDefault();
             if(skill == null)
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
             if(skill.Name != req.Name && courseDbContext.Skills.Where(x=>x.Name == req.Name).Any())
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

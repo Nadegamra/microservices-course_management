@@ -23,7 +23,7 @@ namespace CourseManagement.Endpoints.CourseSubtitles.CourseSubtitleCreate
             Course? course = courseDbContext.Courses.Where(x => x.Id == newSubtitle.CourseId && x.UserId == req.UserId).FirstOrDefault();
             if (course == null || courseDbContext.CourseSubtitles.Where(x => x.Language == newSubtitle.Language && x.CourseId == newSubtitle.CourseId).Any())
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

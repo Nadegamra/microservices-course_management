@@ -23,7 +23,7 @@ namespace CourseManagement.Endpoints.CourseLanguages.CourseLanguageDelete
             CourseLanguage? language = courseDbContext.CourseLanguages.Where(x=>x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
             if (course == null || language == null)
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

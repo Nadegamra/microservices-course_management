@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.Skills.RemoveSkill
     {
         public override void Configure()
         {
-            Delete("skills");
+            Delete("skills/{Id}");
             Roles("ADMIN");
         }
 

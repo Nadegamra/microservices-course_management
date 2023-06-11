@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillDelete
     {
         public override void Configure()
         {
-            Delete("courses/gained/{id}");
+            Delete("courses/{courseId}/gained/{id}");
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -22,7 +22,7 @@ namespace CourseManagement.Endpoints.GainedSkills.GainedSkillDelete
             GainedSkill? skill = courseDbContext.GainedSkills.Where(x=>x.Id == req.Id).FirstOrDefault();
             if (skill == null || !courseDbContext.Courses.Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

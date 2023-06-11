@@ -22,7 +22,7 @@ namespace CourseManagement.Endpoints.Skills.CreateSkill
         {
             if(courseDbContext.Skills.Where(x=>x.Name == req.Name).Any())
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
             }
 
             Skill skill = Map.ToEntity(req);
