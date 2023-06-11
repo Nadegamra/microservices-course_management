@@ -35,15 +35,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Endpoints\CourseLanguages\CourseLanguageCreate\" />
-	  <Folder Include="Endpoints\CourseLanguages\CourseLanguageDelete\" />
-	  <Folder Include="Endpoints\CourseLanguages\CourseLanguageUpdate\" />
 	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementCreate\" />
 	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementDelete\" />
 	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementUpdate\" />
-	  <Folder Include="Endpoints\CourseSubtitles\CourseSubtitleCreate\" />
-	  <Folder Include="Endpoints\CourseSubtitles\CourseSubtitleDelete\" />
-	  <Folder Include="Endpoints\CourseSubtitles\CourseSubtitleUpdate\" />
 	</ItemGroup>
 
 </Project>
