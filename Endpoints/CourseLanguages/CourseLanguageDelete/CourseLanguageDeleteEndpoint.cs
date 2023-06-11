@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.CourseLanguages.CourseLanguageDelete
     {
         public override void Configure()
         {
-            Delete("courses/{CourseId}/languages");
+            Delete("courses/{CourseId}/languages/{Id}");
         }
 
         private readonly CourseDbContext courseDbContext;

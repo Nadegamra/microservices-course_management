@@ -7,7 +7,7 @@ namespace CourseManagement.Endpoints.CourseSubtitles.CourseSubtitleDelete
     {
         public override void Configure()
         {
-            Delete("courses/{CourseId}/subtitles");
+            Delete("courses/{CourseId}/subtitles/{Id}");
         }
 
         private readonly CourseDbContext courseDbContext;

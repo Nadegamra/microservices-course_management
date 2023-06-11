@@ -34,10 +34,4 @@
 		<ProjectReference Include="..\Services.Common\Services.Common.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementCreate\" />
-	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementDelete\" />
-	  <Folder Include="Endpoints\CourseRequirements\CourseRequirementUpdate\" />
-	</ItemGroup>
-
 </Project>

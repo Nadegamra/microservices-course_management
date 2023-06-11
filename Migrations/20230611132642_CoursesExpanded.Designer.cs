@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagement.Migrations
 {
     [DbContext(typeof(CourseDbContext))]
-    [Migration("20230608140458_CoursesExpanded")]
+    [Migration("20230611132642_CoursesExpanded")]
     partial class CoursesExpanded
     {
         /// <inheritdoc />
@@ -96,16 +96,22 @@ namespace CourseManagement.Migrations
 
             modelBuilder.Entity("CourseManagement.Models.CourseRequirement", b =>
                 {
-                    b.Property<int>("CourseId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("SkillId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("CustomDescription")
                         .HasColumnType("longtext");
 
-                    b.HasKey("CourseId", "SkillId");
+                    b.Property<int?>("SkillId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("SkillId");
 
@@ -168,13 +174,22 @@ namespace CourseManagement.Migrations
 
             modelBuilder.Entity("CourseManagement.Models.GainedSkill", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillId")
+                    b.Property<string>("CustomDescription")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("SkillId")
                         .HasColumnType("int");
 
-                    b.HasKey("CourseId", "SkillId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("SkillId");
 
@@ -193,9 +208,12 @@ namespace CourseManagement.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Skills");
                 });
@@ -219,9 +237,7 @@ namespace CourseManagement.Migrations
 
                     b.HasOne("CourseManagement.Models.Skill", "Skill")
                         .WithMany()
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SkillId");
 
                     b.Navigation("Skill");
                 });
@@ -245,9 +261,7 @@ namespace CourseManagement.Migrations
 
                     b.HasOne("CourseManagement.Models.Skill", "Skill")
                         .WithMany()
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SkillId");
 
                     b.Navigation("Skill");
                 });

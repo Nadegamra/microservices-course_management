@@ -97,7 +97,7 @@ namespace CourseManagement.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
@@ -112,14 +112,16 @@ namespace CourseManagement.Migrations
                 name: "CourseRequirements",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    SkillId = table.Column<int>(type: "int", nullable: false),
+                    SkillId = table.Column<int>(type: "int", nullable: true),
                     CustomDescription = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseRequirements", x => new { x.CourseId, x.SkillId });
+                    table.PrimaryKey("PK_CourseRequirements", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CourseRequirements_Courses_CourseId",
                         column: x => x.CourseId,
@@ -130,8 +132,7 @@ namespace CourseManagement.Migrations
                         name: "FK_CourseRequirements_Skills_SkillId",
                         column: x => x.SkillId,
                         principalTable: "Skills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -139,12 +140,16 @@ namespace CourseManagement.Migrations
                 name: "GainedSkills",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    SkillId = table.Column<int>(type: "int", nullable: false)
+                    SkillId = table.Column<int>(type: "int", nullable: true),
+                    CustomDescription = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GainedSkills", x => new { x.CourseId, x.SkillId });
+                    table.PrimaryKey("PK_GainedSkills", x => x.Id);
                     table.ForeignKey(
                         name: "FK_GainedSkills_Courses_CourseId",
                         column: x => x.CourseId,
@@ -155,14 +160,18 @@ namespace CourseManagement.Migrations
                         name: "FK_GainedSkills_Skills_SkillId",
                         column: x => x.SkillId,
                         principalTable: "Skills",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseLanguages_CourseId",
                 table: "CourseLanguages",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseRequirements_CourseId",
+                table: "CourseRequirements",
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
@@ -176,9 +185,20 @@ namespace CourseManagement.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GainedSkills_CourseId",
+                table: "GainedSkills",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GainedSkills_SkillId",
                 table: "GainedSkills",
                 column: "SkillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Skills_Name",
+                table: "Skills",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />

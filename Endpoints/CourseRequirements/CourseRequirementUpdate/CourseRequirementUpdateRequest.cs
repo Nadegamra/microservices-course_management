@@ -1,11 +1,12 @@
 ﻿using FastEndpoints;
 
-namespace CourseManagement.Endpoints.GainedSkills.GainedSkillUpdate
+namespace CourseManagement.Endpoints.CourseRequirements.CourseRequirementUpdate
 {
-    public class GainedSkillUpdateRequest
+    public class CourseRequirementUpdateRequest
     {
         [FromClaim("UserId")]
         public int UserId { get; set; }
+        public required int CourseId { get; set; }
         public required int Id { get; set; }
         public required string CustomDescription { get; set; }
     }
