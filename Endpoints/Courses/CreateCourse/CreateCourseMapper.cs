@@ -10,14 +10,22 @@ namespace CourseManagement.Endpoints.Courses.CreateCourse
             return new CreateCourseResponse
             {
                 Id = e.Id,
-                CertificatePrice = e.CertificatePrice,
-                CoursePrice = e.CoursePrice,
-                Description = e.Description,
-                GrantsCertificate = e.GrantsCertificate,
-                LengthInDays = e.LengthInDays,
-                Name = e.Name,
                 UserId = e.UserId,
-
+                Name = e.Name,
+                ShortDescription = e.ShortDescription,
+                DetailedDescription = e.DetailedDescription,
+                LengthInDays = e.LengthInDays,
+                Price = e.Price,
+                GrantsCertificate = e.GrantsCertificate,
+                CertificatePrice = e.CertificatePrice,
+                ActivityFormat = e.ActivityFormat,
+                ScheduleType = e.ScheduleType,
+                Difficulty = e.Difficulty,
+                GainedSkills = e.GainedSkills,
+                Languages = e.Languages,
+                Requirements = e.Requirements,
+                Subtitles = e.Subtitles,
+                IsHidden = e.IsHidden,
             };
         }
 
@@ -25,13 +33,17 @@ namespace CourseManagement.Endpoints.Courses.CreateCourse
         {
             return new Course
             {
-                CertificatePrice = r.CertificatePrice,
-                CoursePrice = r.CoursePrice,
-                Description = r.Description,
-                GrantsCertificate = r.GrantsCertificate,
-                LengthInDays = r.LengthInDays,
-                Name = r.Name,
                 UserId = r.UserId,
+                Name = r.Name,
+                ShortDescription = r.ShortDescription,
+                DetailedDescription = r.DetailedDescription,
+                LengthInDays = r.LengthInDays,
+                Price = r.Price,
+                GrantsCertificate = r.GrantsCertificate,
+                CertificatePrice = r.CertificatePrice,
+                ActivityFormat = r.ActivityFormat,
+                ScheduleType = r.ScheduleType,
+                Difficulty = r.Difficulty,
                 IsDeleted = false,
                 IsHidden = false,
             };

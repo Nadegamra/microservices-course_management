@@ -9,25 +9,38 @@ namespace CourseManagement.Endpoints.Courses.UpdateCourse
         {
             return new UpdateCourseResponse()
             {
-                CertificatePrice = e.CertificatePrice,
-                CoursePrice = e.CoursePrice,
-                Description = e.Description,
-                GrantsCertificate = e.GrantsCertificate,
                 Id = e.Id,
-                IsHidden = e.IsHidden,
-                LengthInDays = e.LengthInDays,
+                UserId = e.UserId,
                 Name = e.Name,
+                ShortDescription = e.ShortDescription,
+                DetailedDescription = e.DetailedDescription,
+                LengthInDays = e.LengthInDays,
+                Price = e.Price,
+                GrantsCertificate = e.GrantsCertificate,
+                CertificatePrice = e.CertificatePrice,
+                ActivityFormat = e.ActivityFormat,
+                ScheduleType = e.ScheduleType,
+                Difficulty = e.Difficulty,
+                GainedSkills = e.GainedSkills,
+                Languages = e.Languages,
+                Requirements = e.Requirements,
+                Subtitles = e.Subtitles,
+                IsHidden = e.IsHidden,
             };
         }
 
         public override Course UpdateEntity(UpdateCourseRequest r, Course e)
         {
-            e.CertificatePrice = r.CertificatePrice;
-            e.CoursePrice = r.CoursePrice;
-            e.Description = r.Description;
-            e.GrantsCertificate = r.GrantsCertificate;
-            e.LengthInDays = r.LengthInDays;
             e.Name = r.Name;
+            e.ShortDescription = r.ShortDescription;
+            e.DetailedDescription = r.DetailedDescription;
+            e.LengthInDays = r.LengthInDays;
+            e.Price = r.Price;
+            e.GrantsCertificate = r.GrantsCertificate;
+            e.CertificatePrice = r.CertificatePrice;
+            e.ActivityFormat = r.ActivityFormat;
+            e.ScheduleType = r.ScheduleType;
+            e.Difficulty = r.Difficulty;
             e.IsHidden = r.IsHidden;
             return e;
         }

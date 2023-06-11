@@ -22,7 +22,7 @@ namespace CourseManagement.Endpoints.Creators.Profile
             Creator? creator = courseDbContext.Creators.Where(x=>x.Id == req.UserId).FirstOrDefault();
             if(creator == null)
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

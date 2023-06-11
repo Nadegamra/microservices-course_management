@@ -22,7 +22,7 @@ namespace CourseManagement.Endpoints.Creators.UpdateCreator
         {
             Creator? original = courseDbContext.Creators.Where(x=>x.Id == req.UserId).FirstOrDefault();
             if(original == null) {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 

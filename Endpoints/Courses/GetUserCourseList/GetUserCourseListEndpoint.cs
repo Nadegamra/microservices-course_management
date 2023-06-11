@@ -1,5 +1,6 @@
 ﻿using CourseManagement.Models;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Endpoints.Courses.GetUserCourseList
 {
@@ -19,7 +20,7 @@ namespace CourseManagement.Endpoints.Courses.GetUserCourseList
 
         public override async Task HandleAsync(GetUserCourseListRequest req, CancellationToken ct)
         {
-            Course[] courses = courseDbContext.Courses.Where(x => x.UserId == req.UserId && !x.IsDeleted).ToArray();
+            Course[] courses = courseDbContext.Courses.Include(x => x.Requirements).Include(x => x.GainedSkills).Include(x => x.Languages).Include(x => x.Subtitles).Where(x => x.UserId == req.UserId && !x.IsDeleted).ToArray();
             Response = Map.FromEntity(courses);
             await SendOkAsync(Response, ct);
         }

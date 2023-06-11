@@ -11,12 +11,20 @@ namespace CourseManagement.Endpoints.Courses.GetCourse
             {
                 Id = e.Id,
                 UserId = e.UserId,
-                CertificatePrice = e.CertificatePrice,
-                CoursePrice = e.CoursePrice,
-                Description = e.Description,
-                GrantsCertificate = e.GrantsCertificate,
-                LengthInDays = e.LengthInDays,
                 Name = e.Name,
+                ShortDescription = e.ShortDescription,
+                DetailedDescription = e.DetailedDescription,
+                LengthInDays = e.LengthInDays,
+                Price = e.Price,
+                GrantsCertificate = e.GrantsCertificate,
+                CertificatePrice = e.CertificatePrice,
+                ActivityFormat = e.ActivityFormat,
+                ScheduleType = e.ScheduleType,
+                Difficulty = e.Difficulty,
+                GainedSkills = e.GainedSkills,
+                Languages = e.Languages,
+                Requirements = e.Requirements,
+                Subtitles = e.Subtitles,
             };
         }
     }
