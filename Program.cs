@@ -7,6 +7,7 @@ using CourseManagement.Properties;
 using CourseManagement.IntegrationEvents.Handlers;
 using CourseManagement.IntegrationEvents.Events;
 using Services.Common;
+using CourseManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,7 @@ var services = builder.Services;
     // Event Bus
     ConfigureServices.AddEventBus(builder);
 
+    builder.Services.AddTransient<IFileService, GoogleDriveFileService>();
     builder.Services.AddTransient<UserEmailChangedIntegrationEventHandler>();
     builder.Services.AddTransient<UserNameChangedIntegrationEventHandler>();
 }
