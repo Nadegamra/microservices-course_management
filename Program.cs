@@ -1,12 +1,12 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FastEndpoints.Security;
-using CourseManagement;
 using Microsoft.EntityFrameworkCore;
 using CourseManagement.Properties;
 using CourseManagement.IntegrationEvents.Handlers;
 using CourseManagement.IntegrationEvents.Events;
 using Services.Common;
+using CourseManagement.Data;
 using CourseManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);

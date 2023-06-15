@@ -1,0 +1,52 @@
+{
+  "title": "Route[]",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Route"
+  },
+  "definitions": {
+    "Route": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "MethodStr": {
+          "$ref": "#/definitions/MethodStr"
+        },
+        "Path": {
+          "type": "string"
+        },
+        "Roles": {
+          "$ref": "#/definitions/Roles"
+        },
+        "IsPublic": {
+          "type": "boolean"
+        }
+      }
+    },
+    "MethodStr": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH"
+      ]
+    },
+    "Roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "ADMIN",
+          "CREATOR",
+          "CONSUMER"
+        ]
+
+      }
+    }
+  }
+}
