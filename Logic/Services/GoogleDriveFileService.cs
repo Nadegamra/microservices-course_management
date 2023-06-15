@@ -8,6 +8,26 @@ namespace CourseManagement.Services
 {
     public class GoogleDriveFileService : IFileService
     {
+        public async Task DeleteFile(string fileId)
+        {
+            string[] scopes = new string[] { DriveService.Scope.DriveFile };
+
+            var stream = new FileStream("key.json", FileMode.Open, FileAccess.Read);
+
+            var credential = GoogleCredential.FromStream(stream);
+            credential = credential.CreateScoped(scopes);
+
+            var service = new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "OLP",
+            });
+
+            var response = await service.Files.Delete(fileId).ExecuteAsync();
+
+            return;
+        }
+
         public IFormFile DownloadFile(string fileId)
         {
             string[] scopes = new string[] { DriveService.Scope.DriveFile };

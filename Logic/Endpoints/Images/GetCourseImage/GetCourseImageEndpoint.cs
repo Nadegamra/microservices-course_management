@@ -1,4 +1,5 @@
 ﻿using CourseManagement.Data;
+using CourseManagement.Data.Models;
 using CourseManagement.Services;
 using FastEndpoints;
 
@@ -22,9 +23,22 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
 
         public override async Task HandleAsync(GetCourseImageRequest req, CancellationToken ct)
         {
-            IFormFile file = fileService.DownloadFile(req.ImageId);
+            Course? course = courseDbContext.Courses.Where(x=>x.Id == req.CourseId).FirstOrDefault();
+            if(course == null || course.ImageId.Length == 0)
+            {
+                await SendErrorsAsync(400, ct);
+                return;
+            }
+            try
+            {
+                IFormFile file = fileService.DownloadFile(course.ImageId);
 
-            await SendStreamAsync(file.OpenReadStream(), fileName: file.FileName);
+                await SendStreamAsync(file.OpenReadStream(), fileName: file.FileName);
+            }
+            catch (Exception ex)
+            {
+                await SendNotFoundAsync(ct);
+            }
         }
     }
 }

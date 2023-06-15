@@ -24,18 +24,32 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
 
         public override async Task HandleAsync(SetCourseImageRequest req, CancellationToken ct)
         {
-            //TODO: If image already exists, delete the old one
-
             Course? course = courseDbContext.Courses.Where(x=>x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
+            string imageId;
             if (course == null)
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
-            string imageId = await fileService.UploadFile(req.Image); 
-            course.ImageId = imageId;
-            courseDbContext.Courses.Update(course);
-            courseDbContext.SaveChanges();
+            if(course.ImageId.Length == 0)
+            {
+                imageId = await fileService.UploadFile(req.Image);
+
+                course.ImageId = imageId;
+                courseDbContext.Courses.Update(course);
+                courseDbContext.SaveChanges();
+            }
+            else
+            {
+                var task1 = fileService.UploadFile(req.Image);
+                var task2 = fileService.DeleteFile(course.ImageId);
+
+                course.ImageId = await task1;
+                courseDbContext.Courses.Update(course);
+                courseDbContext.SaveChanges();
+
+                await task2;
+            }
             await SendOkAsync(ct);
         }
     }

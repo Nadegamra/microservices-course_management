@@ -167,14 +167,14 @@
   {
     "Name": "getImage",
     "MethodStr": "GET",
-    "Path": "courses/{courseId}/images/{imageId}",
+    "Path": "courses/{courseId}/image",
     "Roles": [ "ADMIN", "CREATOR", "CONSUMER" ],
     "IsPublic": true
   },
   {
     "Name": "setImage",
     "MethodStr": "PUT",
-    "Path": "courses/{courseId}/images",
+    "Path": "courses/{courseId}/image",
     "Roles": [ "ADMIN", "CREATOR" ],
     "IsPublic": false
   },

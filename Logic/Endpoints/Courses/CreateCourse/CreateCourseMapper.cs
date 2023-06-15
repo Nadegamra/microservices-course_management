@@ -46,7 +46,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
                 ScheduleType = r.ScheduleType,
                 Difficulty = r.Difficulty,
                 IsDeleted = false,
-                IsHidden = false,
+                IsHidden = true,
             };
         }
     }
