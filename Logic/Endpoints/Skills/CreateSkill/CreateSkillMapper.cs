@@ -12,6 +12,7 @@ namespace CourseManagement.Logic.Endpoints.Skills.CreateSkill
                 Id = e.Id,
                 Description = e.Description,
                 Name = e.Name,
+                Routes = new[] { RoutesConfig.GetRouteDTO("getSkill") }
             };
         }
 

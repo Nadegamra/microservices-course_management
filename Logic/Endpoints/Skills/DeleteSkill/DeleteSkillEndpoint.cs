@@ -2,9 +2,9 @@
 using CourseManagement.Data.Models;
 using FastEndpoints;
 
-namespace CourseManagement.Logic.Endpoints.Skills.RemoveSkill
+namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
 {
-    public class DeleteSkillEndpoint: EndpointExtended<DeleteSkillRequest>
+    public class DeleteSkillEndpoint: EndpointExtended<DeleteSkillRequest, DeleteSkillResponse, DeleteSkillMapper>
     {
         public override void Configure()
         {
@@ -29,7 +29,8 @@ namespace CourseManagement.Logic.Endpoints.Skills.RemoveSkill
 
             courseDbContext.Skills.Remove(skill);
             courseDbContext.SaveChanges();
-            await SendOkAsync(ct);
+            Response = Map.FromEntity(skill);
+            await SendOkAsync(Response, ct);
         }
     }
 }

@@ -55,6 +55,9 @@
     "IsPublic": false
 
   },
+
+
+
   {
     "Name": "addLanguage",
     "MethodStr": "POST",
@@ -69,6 +72,9 @@
     "Roles": [ "ADMIN", "CREATOR" ],
     "IsPublic": false
   },
+
+
+
   {
     "Name": "addRequirement",
     "MethodStr": "POST",
@@ -90,6 +96,9 @@
     "Roles": [ "ADMIN", "CREATOR" ],
     "IsPublic": false
   },
+
+
+
   {
     "Name": "addSubtitle",
     "MethodStr": "POST",
@@ -104,6 +113,9 @@
     "Roles": [ "ADMIN", "CREATOR" ],
     "IsPublic": false
   },
+
+
+
   {
     "Name": "profile",
     "MethodStr": "GET",
@@ -125,6 +137,9 @@
     "Roles": [ "ADMIN", "CREATOR" ],
     "IsPublic": false
   },
+
+
+
   {
     "Name": "addGained",
     "MethodStr": "POST",
@@ -146,6 +161,9 @@
     "Roles": [ "ADMIN", "CREATOR" ],
     "IsPublic": false
   },
+  
+
+
   {
     "Name": "getImage",
     "MethodStr": "GET",
@@ -160,6 +178,9 @@
     "Roles": [ "ADMIN", "CREATOR" ],
     "IsPublic": false
   },
+  
+
+
   {
     "Name": "createSkill",
     "MethodStr": "POST",

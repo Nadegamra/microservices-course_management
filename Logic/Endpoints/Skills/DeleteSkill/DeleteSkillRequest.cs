@@ -1,7 +1,8 @@
-﻿namespace CourseManagement.Logic.Endpoints.Skills.RemoveSkill
+﻿namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
 {
     public class DeleteSkillRequest
     {
         public int Id { get; set; }
+        public Route[] Routes { get; set; }
     }
 }

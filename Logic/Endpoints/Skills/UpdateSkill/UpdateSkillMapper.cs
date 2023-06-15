@@ -11,7 +11,8 @@ namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
             {
                 Id = e.Id,
                 Description = e.Description,
-                Name = e.Name
+                Name = e.Name,
+                Routes = new[] { RoutesConfig.GetRouteDTO("getSkill") }
             };
         }
 

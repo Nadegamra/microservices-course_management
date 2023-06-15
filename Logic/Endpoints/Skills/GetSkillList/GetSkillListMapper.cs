@@ -3,16 +3,23 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
 {
-    public class GetSkillListMapper: ResponseMapper<List<GetSkillListResponse>, List<Skill>>
+    public class GetSkillListMapper: ResponseMapper<GetSkillListResponse, List<Skill>>
     {
-        public override List<GetSkillListResponse> FromEntity(List<Skill> e)
+        public override GetSkillListResponse FromEntity(List<Skill> e)
         {
-            return e.Select(x => new GetSkillListResponse
+            return new GetSkillListResponse()
             {
-                Id = x.Id,
-                Description = x.Description,
-                Name = x.Name
-            }).ToList();
+                Items = e.Select(x => new GetSkillListItem
+                {
+                    Id = x.Id,
+                    Description = x.Description,
+                    Name = x.Name,
+                }).ToArray(),
+                Routes = new[] { RoutesConfig.GetRouteDTO("getSkill"), 
+                                 RoutesConfig.GetRouteDTO("createSkill"),
+                                 RoutesConfig.GetRouteDTO("deleteSkill"),
+                                 RoutesConfig.GetRouteDTO("updateSkill") }
+            }; 
         }
     }
 }

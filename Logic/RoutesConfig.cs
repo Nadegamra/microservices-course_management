@@ -23,6 +23,17 @@ namespace CourseManagement.Logic
         {
             return _routes[name];
         }
+
+        public static RouteDTO GetRouteDTO(string name)
+        {
+            Route route = GetRoute(name);
+            return new RouteDTO()
+            {
+                Name = name,
+                MethodStr = route.MethodStr,
+                Path = route.Path,
+            };
+        }
         public static Method FromString(string str)
         {
             switch(str)
@@ -41,24 +52,4 @@ namespace CourseManagement.Logic
             throw new Exception();
         }
     }
-    public class Route
-    {
-        public string Name { get; set; }
-        public Method? Method { get; set; }
-        public string MethodStr { get; set; }
-        public required string Path { get; set; }
-        public required string[] Roles { get; set; }
-        public bool IsPublic { get; set; }
-    }
-
-    public enum Method
-    {
-        GET,
-        POST,
-        PUT,
-        DELETE,
-        PATCH
-    }
-
-
 }

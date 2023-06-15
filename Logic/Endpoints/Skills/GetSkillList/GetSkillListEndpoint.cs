@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
 {
-    public class GetSkillListEndpoint: EndpointExtended<EmptyRequest, List<GetSkillListResponse>, GetSkillListMapper>
+    public class GetSkillListEndpoint: EndpointExtended<EmptyRequest, GetSkillListResponse, GetSkillListMapper>
     {
         public override void Configure()
         {

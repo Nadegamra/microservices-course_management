@@ -2,8 +2,7 @@
 {
     public class GetSkillListResponse
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public GetSkillListItem[] Items { get; set; }
+        public RouteDTO[] Routes { get; set; }
     }
 }
