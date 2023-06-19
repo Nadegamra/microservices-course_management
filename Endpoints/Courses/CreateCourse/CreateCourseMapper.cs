@@ -34,6 +34,7 @@ namespace CourseManagement.Endpoints.Courses.CreateCourse
             return new Course
             {
                 UserId = r.UserId,
+                ImageId = "",
                 Name = r.Name,
                 ShortDescription = r.ShortDescription,
                 DetailedDescription = r.DetailedDescription,

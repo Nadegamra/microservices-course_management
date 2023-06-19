@@ -12,7 +12,7 @@ namespace CourseManagement.Models
         public required string Name { get; set; }
         public required string ShortDescription { get; set; }
         public required string DetailedDescription { get; set; }
-        //public required string ImageLink { get; set; }
+        public required string ImageId { get; set; }
         public int LengthInDays { get; set; }
         public decimal Price { get; set; }
         public bool GrantsCertificate { get; set; }
