@@ -14,7 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var services = builder.Services;
 {
-    services.AddCors();
+    services.AddCors((options) =>
+    {
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.WithOrigins("https://localhost:3000", "http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+        });
+    });
 
     // FastEndpoints
     services.AddFastEndpoints();

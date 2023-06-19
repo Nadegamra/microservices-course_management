@@ -1,9 +1,9 @@
 ﻿using CourseManagement.Data.Enums;
 using CourseManagement.Data.Models;
 
-namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourse
+namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourseList
 {
-    public class GetUserCourseResponse
+    public class GetUserCourseListItem
     {
         public int Id { get; set; }
         public int UserId { get; set; }
@@ -22,6 +22,5 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourse
         public ICollection<CourseLanguage>? Languages { get; set; }
         public ICollection<CourseSubtitle>? Subtitles { get; set; }
         public bool IsHidden { get; set; }
-        public RouteDTO[] Routes { get; set; }
     }
 }

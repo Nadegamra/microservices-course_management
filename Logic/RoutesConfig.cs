@@ -34,6 +34,16 @@ namespace CourseManagement.Logic
                 Path = route.Path,
             };
         }
+
+        public static RouteDTO[] GetRouteDTOS(params string[] routeNames)
+        {
+            RouteDTO[] routes = new RouteDTO[routeNames.Length];
+            for(int i = 0; i < routeNames.Length; i++)
+            {
+                routes[i] = GetRouteDTO(routeNames[i]);
+            }
+            return routes;
+        }
         public static Method FromString(string str)
         {
             switch(str)

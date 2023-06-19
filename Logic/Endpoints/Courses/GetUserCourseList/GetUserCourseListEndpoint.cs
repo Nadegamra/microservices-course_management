@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourseList
 {
-    public class GetUserCourseListEndpoint : EndpointExtended<GetUserCourseListRequest, GetUserCourseListResponse[], GetUserCourseListMapper>
+    public class GetUserCourseListEndpoint : EndpointExtended<GetUserCourseListRequest, GetUserCourseListResponse, GetUserCourseListMapper>
     {
         public override void Configure()
         {
