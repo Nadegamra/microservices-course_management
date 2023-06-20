@@ -28,7 +28,7 @@ var services = builder.Services;
     // FastEndpoints
     services.AddFastEndpoints();
     services.AddJWTBearerAuth(builder.Configuration["JwtSecret"]);
-    services.AddSwaggerDoc();
+    services.SwaggerDocument();
 
     // Configuration
     services.Configure<IPConfig>(builder.Configuration.GetSection("IP"));
