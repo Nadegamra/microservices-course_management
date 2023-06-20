@@ -1,5 +1,6 @@
-﻿using CourseManagement.IntegrationEvents.Events;
-using CourseManagement.Models;
+﻿using CourseManagement.Data;
+using CourseManagement.Data.Models;
+using CourseManagement.IntegrationEvents.Events;
 using Infrastructure.EventBus.Generic.IntegrationEvents;
 
 namespace CourseManagement.IntegrationEvents.Handlers

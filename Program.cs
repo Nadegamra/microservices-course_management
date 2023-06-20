@@ -1,12 +1,12 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FastEndpoints.Security;
-using CourseManagement;
 using Microsoft.EntityFrameworkCore;
 using CourseManagement.Properties;
 using CourseManagement.IntegrationEvents.Handlers;
 using CourseManagement.IntegrationEvents.Events;
 using Services.Common;
+using CourseManagement.Data;
 using CourseManagement.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,12 +14,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var services = builder.Services;
 {
-    services.AddCors();
+    services.AddCors((options) =>
+    {
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.WithOrigins("https://localhost:3000", "http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+        });
+    });
 
     // FastEndpoints
     services.AddFastEndpoints();
     services.AddJWTBearerAuth(builder.Configuration["JwtSecret"]);
-    services.AddSwaggerDoc();
+    services.SwaggerDocument();
 
     // Configuration
     services.Configure<IPConfig>(builder.Configuration.GetSection("IP"));
