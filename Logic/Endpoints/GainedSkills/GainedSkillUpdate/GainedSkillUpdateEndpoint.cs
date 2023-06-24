@@ -8,7 +8,8 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillUpdate
     {
         public override void Configure()
         {
-            ConfigureEndpoint("updateGained");
+            Put("courses/{courseId}/gained/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

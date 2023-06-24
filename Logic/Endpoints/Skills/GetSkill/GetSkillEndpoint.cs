@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkill
 {
-    public class GetSkillEndpoint : EndpointExtended<GetSkillRequest, GetSkillResponse, GetSkillMapper>
+    public class GetSkillEndpoint : Endpoint<GetSkillRequest, GetSkillResponse, GetSkillMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("getSkill");
+            Get("skills/{id}");
+            AllowAnonymous();
         }
 
         private readonly CourseDbContext courseDbContext;

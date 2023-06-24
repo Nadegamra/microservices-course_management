@@ -1,15 +1,17 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using FastEndpoints;
 using Infrastructure.Routes;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.Courses.GetCourse
 {
-    public class GetCourseEndpoint : EndpointExtended<GetCourseRequest, GetCourseResponse, GetCourseMapper>
+    public class GetCourseEndpoint : Endpoint<GetCourseRequest, GetCourseResponse, GetCourseMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("course");
+            Get("courses/{id}");
+            AllowAnonymous();
         }
 
         private readonly CourseDbContext courseDbContext;

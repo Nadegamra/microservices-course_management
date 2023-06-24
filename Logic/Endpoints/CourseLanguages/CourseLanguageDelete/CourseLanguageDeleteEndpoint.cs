@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageDelete
 {
-    public class CourseLanguageDeleteEndpoint : EndpointExtended<CourseLanguageDeleteRequest>
+    public class CourseLanguageDeleteEndpoint : Endpoint<CourseLanguageDeleteRequest>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("removeLanguage");
+            Delete("courses/{courseId}/languages/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

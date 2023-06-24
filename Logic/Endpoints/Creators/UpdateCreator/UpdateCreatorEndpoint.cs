@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Creators.UpdateCreator
 {
-    public class UpdateCreatorEndpoint : EndpointExtended<UpdateCreatorRequest, EmptyResponse, UpdateCreatorMapper>
+    public class UpdateCreatorEndpoint : Endpoint<UpdateCreatorRequest, EmptyResponse, UpdateCreatorMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("updateCreator");
+            Put("creator");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

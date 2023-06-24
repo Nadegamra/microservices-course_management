@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleDelete
 {
-    public class CourseSubtitleDeleteEndpoint : EndpointExtended<CourseSubtitleDeleteRequest>
+    public class CourseSubtitleDeleteEndpoint : Endpoint<CourseSubtitleDeleteRequest>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("removeSubtitle");
+            Delete("courses/{courseId}/subtitles/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

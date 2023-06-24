@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.CreateSkill
 {
-    public class CreateSkillEndpoint : EndpointExtended<CreateSkillRequest, CreateSkillResponse, CreateSkillMapper>
+    public class CreateSkillEndpoint : Endpoint<CreateSkillRequest, CreateSkillResponse, CreateSkillMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("createSkill");
+            Post("skills");
+            Roles("ADMIN");
         }
 
         private readonly CourseDbContext courseDbContext;

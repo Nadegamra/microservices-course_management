@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageCreate
 {
-    public class CourseLanguageCreateEndpoint : EndpointExtended<CourseLanguageCreateRequest, EmptyResponse, CourseLanguageCreateMapper>
+    public class CourseLanguageCreateEndpoint : Endpoint<CourseLanguageCreateRequest, EmptyResponse, CourseLanguageCreateMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("addLanguage");
+            Post("courses/{courseId}/languages");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

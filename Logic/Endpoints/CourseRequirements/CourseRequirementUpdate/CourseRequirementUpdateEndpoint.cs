@@ -5,11 +5,12 @@ using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementUpdate
 {
-    public class CourseRequirementUpdateEndpoint : EndpointExtended<CourseRequirementUpdateRequest, EmptyResponse, CourseRequirementUpdateMapper>
+    public class CourseRequirementUpdateEndpoint : Endpoint<CourseRequirementUpdateRequest, EmptyResponse, CourseRequirementUpdateMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("updateRequirement");
+            Put("courses/{courseId}/requirements/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

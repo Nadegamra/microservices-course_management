@@ -1,15 +1,16 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using CourseManagement.Services;
-using Infrastructure.Routes;
+using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
 {
-    public class SetCourseImageEndpoint : EndpointExtended<SetCourseImageRequest>
+    public class SetCourseImageEndpoint : Endpoint<SetCourseImageRequest>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("setImage");
+            Put("courses/{courseId}/image");
+            Roles("ADMIN", "CREATOR");
             AllowFileUploads();
         }
 

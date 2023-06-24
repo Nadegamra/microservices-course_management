@@ -1,14 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
-using Infrastructure.Routes;
+using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 {
-    public class GainedSkillCreateEndpoint : EndpointExtended<GainedSkillCreateRequest, GainedSkillCreateResponse, GainedSkillCreateMapper>
+    public class GainedSkillCreateEndpoint : Endpoint<GainedSkillCreateRequest, GainedSkillCreateResponse, GainedSkillCreateMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("addGained");
+            Post("courses/{courseId}/gained");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

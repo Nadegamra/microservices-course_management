@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Creators.RegisterCreator
 {
-    public class RegisterCreatorEndpoint : EndpointExtended<RegisterCreatorRequest, EmptyResponse, RegisterCreatorMapper>
+    public class RegisterCreatorEndpoint : Endpoint<RegisterCreatorRequest, EmptyResponse, RegisterCreatorMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("registerCreator");
+            Post("creator");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

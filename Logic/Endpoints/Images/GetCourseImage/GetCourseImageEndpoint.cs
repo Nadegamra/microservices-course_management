@@ -1,15 +1,16 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using CourseManagement.Services;
-using Infrastructure.Routes;
+using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
 {
-    public class GetCourseImageEndpoint : EndpointExtended<GetCourseImageRequest>
+    public class GetCourseImageEndpoint : Endpoint<GetCourseImageRequest>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("getImage");
+            Get("courses/{courseId}/image");
+            AllowAnonymous();
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -33,7 +34,7 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
             {
                 IFormFile file = fileService.DownloadFile(course.ImageId);
 
-                await SendStreamAsync(file.OpenReadStream(), fileName: file.FileName);
+                await SendStreamAsync(file.OpenReadStream(), fileName: file.FileName, cancellation: ct);
             }
             catch (Exception ex)
             {

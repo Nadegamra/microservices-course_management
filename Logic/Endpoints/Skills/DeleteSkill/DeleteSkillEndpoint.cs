@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
 {
-    public class DeleteSkillEndpoint : EndpointExtended<DeleteSkillRequest, DeleteSkillResponse, DeleteSkillMapper>
+    public class DeleteSkillEndpoint : Endpoint<DeleteSkillRequest, DeleteSkillResponse, DeleteSkillMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("deleteSkill");
+            Delete("skills/{id}");
+            Roles("ADMIN");
         }
 
         private readonly CourseDbContext courseDbContext;

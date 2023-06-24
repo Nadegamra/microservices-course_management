@@ -1,14 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
-using Infrastructure.Routes;
+using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillDelete
 {
-    public class GainedSkillDeleteEndpoint : EndpointExtended<GainedSkillDeleteRequest>
+    public class GainedSkillDeleteEndpoint : Endpoint<GainedSkillDeleteRequest>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("removeGained");
+            Delete("courses/{courseId}/gained/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

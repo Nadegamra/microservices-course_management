@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Courses.DeleteCourse
 {
-    public class DeleteCourseEndpoint : EndpointExtended<DeleteCourseRequest, EmptyResponse>
+    public class DeleteCourseEndpoint : Endpoint<DeleteCourseRequest, EmptyResponse>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("deleteCourse");
+            Delete("courses/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

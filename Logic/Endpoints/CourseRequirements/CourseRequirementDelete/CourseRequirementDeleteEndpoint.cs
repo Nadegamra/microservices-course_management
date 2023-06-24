@@ -1,14 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
-using Infrastructure.Routes;
+using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementDelete
 {
-    public class CourseRequirementDeleteEndpoint : EndpointExtended<CourseRequirementDeleteRequest>
+    public class CourseRequirementDeleteEndpoint : Endpoint<CourseRequirementDeleteRequest>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("removeRequirement");
+            Delete("courses/{courseId}/requirements/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementCreate
 {
-    public class CourseRequirementCreateEndpoint : EndpointExtended<CourseRequirementCreateRequest, EmptyResponse, CourseRequirementCreateMapper>
+    public class CourseRequirementCreateEndpoint : Endpoint<CourseRequirementCreateRequest, EmptyResponse, CourseRequirementCreateMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("addRequirement");
+            Post("courses/{courseId}/requirements");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

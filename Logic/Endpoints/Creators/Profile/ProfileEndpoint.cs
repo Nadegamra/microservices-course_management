@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Creators.Profile
 {
-    public class ProfileEndpoint : EndpointExtended<ProfileRequest, ProfileResponse, ProfileMapper>
+    public class ProfileEndpoint : Endpoint<ProfileRequest, ProfileResponse, ProfileMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("profile");
+            Get("creator");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

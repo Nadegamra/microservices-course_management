@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
 {
-    public class CreateCourseEndpoint : EndpointExtended<CreateCourseRequest, CreateCourseResponse, CreateCourseMapper>
+    public class CreateCourseEndpoint : Endpoint<CreateCourseRequest, CreateCourseResponse, CreateCourseMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("createCourse");
+            Post("courses");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

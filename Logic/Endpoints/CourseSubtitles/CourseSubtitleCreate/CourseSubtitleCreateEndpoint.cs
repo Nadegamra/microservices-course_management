@@ -1,15 +1,15 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleCreate
 {
-    public class CourseSubtitleCreateEndpoint : EndpointExtended<CourseSubtitleCreateRequest, EmptyResponse, CourseSubtitleCreateMapper>
+    public class CourseSubtitleCreateEndpoint : Endpoint<CourseSubtitleCreateRequest, EmptyResponse, CourseSubtitleCreateMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("addSubtitle");
+            Post("courses/{courseId}/subtitles");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;
