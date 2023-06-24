@@ -2,6 +2,6 @@
 {
     public class GetUserCourseListResponse
     {
-        public GetUserCourseListItem[] Items { get; set; }
+        public required GetUserCourseListItem[] Items { get; set; }
     }
 }
