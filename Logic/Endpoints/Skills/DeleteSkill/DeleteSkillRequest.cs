@@ -3,6 +3,5 @@
     public class DeleteSkillRequest
     {
         public int Id { get; set; }
-        public Route[] Routes { get; set; }
     }
 }

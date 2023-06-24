@@ -1,6 +1,5 @@
 ﻿using CourseManagement.Data.Enums;
 using CourseManagement.Data.Models;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourse
 {

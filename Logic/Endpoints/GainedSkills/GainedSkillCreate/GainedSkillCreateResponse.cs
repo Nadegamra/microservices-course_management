@@ -1,6 +1,4 @@
-﻿using Infrastructure.Routes;
-
-namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
+﻿namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 {
     public class GainedSkillCreateResponse
     {

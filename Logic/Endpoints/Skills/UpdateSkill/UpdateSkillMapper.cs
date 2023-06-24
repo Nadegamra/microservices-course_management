@@ -1,6 +1,5 @@
 ﻿using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
 {

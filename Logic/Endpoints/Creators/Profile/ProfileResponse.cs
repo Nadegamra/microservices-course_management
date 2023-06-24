@@ -1,7 +1,4 @@
-﻿using Infrastructure.Routes;
-using Microsoft.AspNetCore.Identity;
-
-namespace CourseManagement.Logic.Endpoints.Creators.Profile
+﻿namespace CourseManagement.Logic.Endpoints.Creators.Profile
 {
     public class ProfileResponse
     {

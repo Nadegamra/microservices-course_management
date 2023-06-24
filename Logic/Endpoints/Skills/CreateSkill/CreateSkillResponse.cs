@@ -1,6 +1,4 @@
-﻿using Infrastructure.Routes;
-
-namespace CourseManagement.Logic.Endpoints.Skills.CreateSkill
+﻿namespace CourseManagement.Logic.Endpoints.Skills.CreateSkill
 {
     public class CreateSkillResponse
     {

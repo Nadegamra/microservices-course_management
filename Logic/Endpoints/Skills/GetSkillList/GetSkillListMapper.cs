@@ -1,6 +1,5 @@
 ﻿using CourseManagement.Data.Models;
 using FastEndpoints;
-using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
 {
@@ -16,10 +15,6 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
                     Description = x.Description,
                     Name = x.Name,
                 }).ToArray(),
-                Routes = new[] { RoutesConfig.GetRouteDTO("getSkill"),
-                                 RoutesConfig.GetRouteDTO("createSkill"),
-                                 RoutesConfig.GetRouteDTO("deleteSkill"),
-                                 RoutesConfig.GetRouteDTO("updateSkill") }
             };
         }
     }

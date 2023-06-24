@@ -1,10 +1,10 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
-using Infrastructure.Routes;
+using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillUpdate
 {
-    public class GainedSkillUpdateEndpoint : EndpointExtended<GainedSkillUpdateRequest, GainedSkillUpdateResponse, GainedSkillUpdateMapper>
+    public class GainedSkillUpdateEndpoint : Endpoint<GainedSkillUpdateRequest, GainedSkillUpdateResponse, GainedSkillUpdateMapper>
     {
         public override void Configure()
         {

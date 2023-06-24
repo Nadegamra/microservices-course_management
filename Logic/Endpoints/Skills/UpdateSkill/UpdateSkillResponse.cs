@@ -1,6 +1,4 @@
-﻿using Infrastructure.Routes;
-
-namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
+﻿namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
 {
     public class UpdateSkillResponse
     {

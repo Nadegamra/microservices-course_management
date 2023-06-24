@@ -1,5 +1,4 @@
 ﻿using FastEndpoints;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementCreate
 {
