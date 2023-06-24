@@ -4,11 +4,12 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Creators.Profile
 {
-    public class ProfileEndpoint: EndpointExtended<ProfileRequest, ProfileResponse, ProfileMapper>
+    public class ProfileEndpoint : Endpoint<ProfileRequest, ProfileResponse, ProfileMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("profile");
+            Get("creator");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -20,8 +21,8 @@ namespace CourseManagement.Logic.Endpoints.Creators.Profile
 
         public override async Task HandleAsync(ProfileRequest req, CancellationToken ct)
         {
-            Creator? creator = courseDbContext.Creators.Where(x=>x.Id == req.UserId).FirstOrDefault();
-            if(creator == null)
+            Creator? creator = courseDbContext.Creators.Where(x => x.Id == req.UserId).FirstOrDefault();
+            if (creator == null)
             {
                 await SendErrorsAsync(400, ct);
                 return;

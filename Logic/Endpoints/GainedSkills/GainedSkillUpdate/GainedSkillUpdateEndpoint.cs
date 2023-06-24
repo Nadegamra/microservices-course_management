@@ -4,11 +4,12 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillUpdate
 {
-    public class GainedSkillUpdateEndpoint : EndpointExtended<GainedSkillUpdateRequest, GainedSkillUpdateResponse, GainedSkillUpdateMapper>
+    public class GainedSkillUpdateEndpoint : Endpoint<GainedSkillUpdateRequest, GainedSkillUpdateResponse, GainedSkillUpdateMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("updateGained");
+            Put("courses/{courseId}/gained/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

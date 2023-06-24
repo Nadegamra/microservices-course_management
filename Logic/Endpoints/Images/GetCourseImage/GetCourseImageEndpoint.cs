@@ -5,11 +5,12 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
 {
-    public class GetCourseImageEndpoint : EndpointExtended<GetCourseImageRequest>
+    public class GetCourseImageEndpoint : Endpoint<GetCourseImageRequest>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("getImage");
+            Get("courses/{courseId}/image");
+            AllowAnonymous();
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -23,8 +24,8 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
 
         public override async Task HandleAsync(GetCourseImageRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x=>x.Id == req.CourseId).FirstOrDefault();
-            if(course == null || course.ImageId.Length == 0)
+            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId).FirstOrDefault();
+            if (course == null || course.ImageId.Length == 0)
             {
                 await SendErrorsAsync(400, ct);
                 return;
@@ -33,7 +34,7 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
             {
                 IFormFile file = fileService.DownloadFile(course.ImageId);
 
-                await SendStreamAsync(file.OpenReadStream(), fileName: file.FileName);
+                await SendStreamAsync(file.OpenReadStream(), fileName: file.FileName, cancellation: ct);
             }
             catch (Exception ex)
             {

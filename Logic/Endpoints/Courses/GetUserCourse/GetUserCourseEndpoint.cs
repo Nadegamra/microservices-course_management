@@ -1,16 +1,16 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
-using CourseManagement.Logic.Endpoints;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourse
 {
-    public class GetUserCourseEndpoint : EndpointExtended<GetUserCourseRequest, GetUserCourseResponse, GetUserCourseMapper>
+    public class GetUserCourseEndpoint : Endpoint<GetUserCourseRequest, GetUserCourseResponse, GetUserCourseMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("myCourse");
+            Get("courses/personal/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

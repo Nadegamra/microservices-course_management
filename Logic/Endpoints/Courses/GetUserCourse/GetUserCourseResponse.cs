@@ -22,6 +22,5 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourse
         public ICollection<CourseLanguage>? Languages { get; set; }
         public ICollection<CourseSubtitle>? Subtitles { get; set; }
         public bool IsHidden { get; set; }
-        public RouteDTO[] Routes { get; set; }
     }
 }

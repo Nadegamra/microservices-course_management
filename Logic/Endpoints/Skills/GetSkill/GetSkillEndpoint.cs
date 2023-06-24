@@ -4,11 +4,12 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkill
 {
-    public class GetSkillEndpoint: EndpointExtended<GetSkillRequest, GetSkillResponse,GetSkillMapper>
+    public class GetSkillEndpoint : Endpoint<GetSkillRequest, GetSkillResponse, GetSkillMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("getSkill");
+            Get("skills/{id}");
+            AllowAnonymous();
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -20,7 +21,7 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkill
 
         public override async Task HandleAsync(GetSkillRequest req, CancellationToken ct)
         {
-            Skill? skill = courseDbContext.Skills.Where(x=>x.Id == req.Id).FirstOrDefault();
+            Skill? skill = courseDbContext.Skills.Where(x => x.Id == req.Id).FirstOrDefault();
             if (skill == null)
             {
                 await SendErrorsAsync(400, ct);

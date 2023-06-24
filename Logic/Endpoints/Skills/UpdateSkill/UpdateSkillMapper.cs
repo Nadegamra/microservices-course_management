@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
 {
-    public class UpdateSkillMapper: Mapper<UpdateSkillRequest, UpdateSkillResponse, Skill>
+    public class UpdateSkillMapper : Mapper<UpdateSkillRequest, UpdateSkillResponse, Skill>
     {
         public override UpdateSkillResponse FromEntity(Skill e)
         {
@@ -12,7 +12,6 @@ namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
                 Id = e.Id,
                 Description = e.Description,
                 Name = e.Name,
-                Routes = new[] { RoutesConfig.GetRouteDTO("getSkill") }
             };
         }
 

@@ -4,11 +4,12 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
 {
-    public class UpdateCourseEndpoint : EndpointExtended<UpdateCourseRequest, UpdateCourseResponse, UpdateCourseMapper>
+    public class UpdateCourseEndpoint : Endpoint<UpdateCourseRequest, UpdateCourseResponse, UpdateCourseMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("updateCourse");
+            Put("courses/{id}");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;

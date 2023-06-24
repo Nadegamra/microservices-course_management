@@ -29,11 +29,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourseList
                     Subtitles = x.Subtitles,
                     IsHidden = x.IsHidden,
                 }).ToArray(),
-                Routes = new[] {
-                    RoutesConfig.GetRouteDTO("myCourse"),
-                    RoutesConfig.GetRouteDTO("createCourse"),
-                }
-            }; 
+            };
         }
     }
 }

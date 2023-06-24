@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageCreate
 {
-    public class CourseLanguageCreateMapper: RequestMapper<CourseLanguageCreateRequest, CourseLanguage>
+    public class CourseLanguageCreateMapper : RequestMapper<CourseLanguageCreateRequest, CourseLanguage>
     {
         public override CourseLanguage ToEntity(CourseLanguageCreateRequest r)
         {

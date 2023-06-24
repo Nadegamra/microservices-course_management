@@ -4,11 +4,12 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Creators.RegisterCreator
 {
-    public class RegisterCreatorEndpoint: EndpointExtended<RegisterCreatorRequest, EmptyResponse,RegisterCreatorMapper>
+    public class RegisterCreatorEndpoint : Endpoint<RegisterCreatorRequest, EmptyResponse, RegisterCreatorMapper>
     {
         public override void Configure()
         {
-            ConfigureEndpoint("registerCreator");
+            Post("creator");
+            Roles("ADMIN", "CREATOR");
         }
 
         private readonly CourseDbContext courseDbContext;
@@ -20,8 +21,8 @@ namespace CourseManagement.Logic.Endpoints.Creators.RegisterCreator
 
         public override async Task HandleAsync(RegisterCreatorRequest req, CancellationToken ct)
         {
-            Creator? creator = courseDbContext.Creators.Where(x=>x.Id == req.Id).FirstOrDefault();
-            if(creator != null)
+            Creator? creator = courseDbContext.Creators.Where(x => x.Id == req.Id).FirstOrDefault();
+            if (creator != null)
             {
                 await SendErrorsAsync(400, ct);
                 return;

@@ -3,6 +3,5 @@
     public class GetSkillListResponse
     {
         public GetSkillListItem[] Items { get; set; }
-        public RouteDTO[] Routes { get; set; }
     }
 }
