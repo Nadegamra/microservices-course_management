@@ -1,8 +1,9 @@
-﻿namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
+﻿using Infrastructure.Routes;
+
+namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
 {
-    public class GetSkillListResponse
+    public class GetSkillListResponse : BaseResponse
     {
         public GetSkillListItem[] Items { get; set; }
-        public RouteDTO[] Routes { get; set; }
     }
 }

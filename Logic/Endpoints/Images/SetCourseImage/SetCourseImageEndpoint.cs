@@ -1,11 +1,11 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using CourseManagement.Services;
-using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
 {
-    public class SetCourseImageEndpoint: EndpointExtended<SetCourseImageRequest>
+    public class SetCourseImageEndpoint : EndpointExtended<SetCourseImageRequest>
     {
         public override void Configure()
         {
@@ -24,14 +24,14 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
 
         public override async Task HandleAsync(SetCourseImageRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x=>x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
+            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
             string imageId;
             if (course == null)
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
-            if(course.ImageId.Length == 0)
+            if (course.ImageId.Length == 0)
             {
                 imageId = await fileService.UploadFile(req.Image);
 

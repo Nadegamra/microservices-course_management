@@ -1,5 +1,6 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 {

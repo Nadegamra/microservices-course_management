@@ -3,217 +3,196 @@
     "Name": "courseList",
     "MethodStr": "GET",
     "Path": "courses",
-    "Roles": [ "ADMIN", "CONSUMER", "CREATOR" ],
+    "Roles": ["ADMIN", "CONSUMER", "CREATOR"],
     "IsPublic": true
-
   },
   {
     "Name": "course",
     "MethodStr": "GET",
     "Path": "courses/{id}",
-    "Roles": [ "ADMIN", "CONSUMER", "CREATOR" ],
+    "Roles": ["ADMIN", "CONSUMER", "CREATOR"],
     "IsPublic": true
-
   },
   {
     "Name": "updateCourse",
     "MethodStr": "PUT",
     "Path": "courses/{id}",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
-
   },
   {
     "Name": "createCourse",
     "MethodStr": "POST",
     "Path": "courses",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
-
   },
   {
     "Name": "deleteCourse",
     "MethodStr": "DELETE",
     "Path": "courses/{id}",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
-
   },
   {
     "Name": "myCourseList",
     "MethodStr": "GET",
     "Path": "courses/personal",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
-
   },
   {
     "Name": "myCourse",
     "MethodStr": "GET",
     "Path": "courses/personal/{id}",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
-
   },
-
-
 
   {
     "Name": "addLanguage",
     "MethodStr": "POST",
     "Path": "courses/{courseId}/languages",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "removeLanguage",
     "MethodStr": "DELETE",
     "Path": "courses/{courseId}/languages",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
-
-
 
   {
     "Name": "addRequirement",
     "MethodStr": "POST",
     "Path": "courses/{CourseId}/requirements",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "removeRequirement",
     "MethodStr": "DELETE",
     "Path": "courses/{CourseId}/requirements/{id}",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "updateRequirement",
     "MethodStr": "PUT",
     "Path": "courses/{CourseId}/requirements/{id}",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
-
-
 
   {
     "Name": "addSubtitle",
     "MethodStr": "POST",
     "Path": "courses/{courseId}/subtitles",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "removeSubtitle",
     "MethodStr": "DELETE",
     "Path": "courses/{courseId}/subtitles",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
-
-
 
   {
     "Name": "profile",
     "MethodStr": "GET",
     "Path": "creator",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "registerCreator",
     "MethodStr": "POST",
     "Path": "creator",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "updateCreator",
     "MethodStr": "PUT",
     "Path": "creator",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
-
-
 
   {
     "Name": "addGained",
     "MethodStr": "POST",
     "Path": "courses/{courseId}/gained",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "removeGained",
     "MethodStr": "DELETE",
     "Path": "courses/{courseId}/gained/{id}",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
   {
     "Name": "updateGained",
     "MethodStr": "PUT",
     "Path": "courses/{courseId}/gained/{id}",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
-  
-
 
   {
     "Name": "getImage",
     "MethodStr": "GET",
     "Path": "courses/{courseId}/image",
-    "Roles": [ "ADMIN", "CREATOR", "CONSUMER" ],
+    "Roles": ["ADMIN", "CREATOR", "CONSUMER"],
     "IsPublic": true
   },
   {
     "Name": "setImage",
     "MethodStr": "PUT",
     "Path": "courses/{courseId}/image",
-    "Roles": [ "ADMIN", "CREATOR" ],
+    "Roles": ["ADMIN", "CREATOR"],
     "IsPublic": false
   },
-  
-
 
   {
     "Name": "createSkill",
     "MethodStr": "POST",
     "Path": "skills",
-    "Roles": [ "ADMIN" ],
+    "Roles": ["ADMIN"],
     "IsPublic": false
   },
   {
     "Name": "deleteSkill",
     "MethodStr": "DELETE",
     "Path": "skills/{id}",
-    "Roles": [ "ADMIN" ],
+    "Roles": ["ADMIN"],
     "IsPublic": false
   },
   {
     "Name": "getSkill",
     "MethodStr": "GET",
     "Path": "skills/{id}",
-    "Roles": [ "ADMIN", "CREATOR", "CONSUMER" ],
+    "Roles": ["ADMIN", "CREATOR", "CONSUMER"],
     "IsPublic": true
   },
   {
     "Name": "getSkillList",
     "MethodStr": "GET",
     "Path": "skills",
-    "Roles": [ "ADMIN", "CREATOR", "CONSUMER" ],
+    "Roles": ["ADMIN", "CREATOR", "CONSUMER"],
     "IsPublic": true
   },
   {
     "Name": "updateSkill",
     "MethodStr": "PUT",
     "Path": "skills/{id}",
-    "Roles": [ "ADMIN" ],
+    "Roles": ["ADMIN"],
     "IsPublic": false
   }
 ]

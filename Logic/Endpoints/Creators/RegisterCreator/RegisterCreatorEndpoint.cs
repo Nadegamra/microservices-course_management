@@ -1,10 +1,11 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Creators.RegisterCreator
 {
-    public class RegisterCreatorEndpoint: EndpointExtended<RegisterCreatorRequest, EmptyResponse,RegisterCreatorMapper>
+    public class RegisterCreatorEndpoint : EndpointExtended<RegisterCreatorRequest, EmptyResponse, RegisterCreatorMapper>
     {
         public override void Configure()
         {
@@ -20,8 +21,8 @@ namespace CourseManagement.Logic.Endpoints.Creators.RegisterCreator
 
         public override async Task HandleAsync(RegisterCreatorRequest req, CancellationToken ct)
         {
-            Creator? creator = courseDbContext.Creators.Where(x=>x.Id == req.Id).FirstOrDefault();
-            if(creator != null)
+            Creator? creator = courseDbContext.Creators.Where(x => x.Id == req.Id).FirstOrDefault();
+            if (creator != null)
             {
                 await SendErrorsAsync(400, ct);
                 return;

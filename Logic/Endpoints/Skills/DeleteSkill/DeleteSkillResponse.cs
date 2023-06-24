@@ -1,7 +1,9 @@
-﻿namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
+﻿using Infrastructure.Routes;
+
+namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
 {
-    public class DeleteSkillResponse
+    public class DeleteSkillResponse : BaseResponse
     {
-        public RouteDTO[] Routes { get; set; }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using CourseManagement.Services;
-using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
 {
@@ -23,8 +23,8 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
 
         public override async Task HandleAsync(GetCourseImageRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x=>x.Id == req.CourseId).FirstOrDefault();
-            if(course == null || course.ImageId.Length == 0)
+            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId).FirstOrDefault();
+            if (course == null || course.ImageId.Length == 0)
             {
                 await SendErrorsAsync(400, ct);
                 return;

@@ -1,10 +1,11 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementCreate
 {
-    public class CourseRequirementCreateEndpoint: EndpointExtended<CourseRequirementCreateRequest, EmptyResponse, CourseRequirementCreateMapper>
+    public class CourseRequirementCreateEndpoint : EndpointExtended<CourseRequirementCreateRequest, EmptyResponse, CourseRequirementCreateMapper>
     {
         public override void Configure()
         {
@@ -20,13 +21,13 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementC
 
         public override async Task HandleAsync(CourseRequirementCreateRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x=>x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
-            if(course == null || (req.SkillId != null && req.CustomDescription != null))
+            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
+            if (course == null || (req.SkillId != null && req.CustomDescription != null))
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
-            if (req.SkillId != null && courseDbContext.CourseRequirements.Where(x=> x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any())
+            if (req.SkillId != null && courseDbContext.CourseRequirements.Where(x => x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any())
             {
                 await SendErrorsAsync(400, ct);
                 return;

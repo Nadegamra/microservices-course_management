@@ -1,10 +1,11 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
 {
-    public class GetSkillListEndpoint: EndpointExtended<EmptyRequest, GetSkillListResponse, GetSkillListMapper>
+    public class GetSkillListEndpoint : EndpointExtended<EmptyRequest, GetSkillListResponse, GetSkillListMapper>
     {
         public override void Configure()
         {

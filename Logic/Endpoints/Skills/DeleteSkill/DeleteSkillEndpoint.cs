@@ -1,10 +1,11 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
 {
-    public class DeleteSkillEndpoint: EndpointExtended<DeleteSkillRequest, DeleteSkillResponse, DeleteSkillMapper>
+    public class DeleteSkillEndpoint : EndpointExtended<DeleteSkillRequest, DeleteSkillResponse, DeleteSkillMapper>
     {
         public override void Configure()
         {
@@ -20,8 +21,8 @@ namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
 
         public override async Task HandleAsync(DeleteSkillRequest req, CancellationToken ct)
         {
-            Skill? skill = courseDbContext.Skills.Where(x=>x.Id == req.Id).FirstOrDefault();
-            if(skill == null)
+            Skill? skill = courseDbContext.Skills.Where(x => x.Id == req.Id).FirstOrDefault();
+            if (skill == null)
             {
                 await SendErrorsAsync(418, ct);
                 return;

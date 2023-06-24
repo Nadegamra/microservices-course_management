@@ -28,7 +28,6 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourseList
                     Requirements = x.Requirements,
                     Subtitles = x.Subtitles,
                 }).ToArray(),
-                Routes = new[] { RoutesConfig.GetRouteDTO("course") }
             };
         }
     }

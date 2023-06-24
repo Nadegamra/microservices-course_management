@@ -1,10 +1,11 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkill
 {
-    public class GetSkillEndpoint: EndpointExtended<GetSkillRequest, GetSkillResponse,GetSkillMapper>
+    public class GetSkillEndpoint : EndpointExtended<GetSkillRequest, GetSkillResponse, GetSkillMapper>
     {
         public override void Configure()
         {
@@ -20,7 +21,7 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkill
 
         public override async Task HandleAsync(GetSkillRequest req, CancellationToken ct)
         {
-            Skill? skill = courseDbContext.Skills.Where(x=>x.Id == req.Id).FirstOrDefault();
+            Skill? skill = courseDbContext.Skills.Where(x => x.Id == req.Id).FirstOrDefault();
             if (skill == null)
             {
                 await SendErrorsAsync(400, ct);

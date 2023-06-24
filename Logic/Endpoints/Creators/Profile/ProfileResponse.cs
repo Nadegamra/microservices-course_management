@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Infrastructure.Routes;
+using Microsoft.AspNetCore.Identity;
 
 namespace CourseManagement.Logic.Endpoints.Creators.Profile
 {

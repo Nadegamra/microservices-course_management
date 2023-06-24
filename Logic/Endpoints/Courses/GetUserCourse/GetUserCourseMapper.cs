@@ -26,14 +26,6 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourse
                 Requirements = e.Requirements,
                 Subtitles = e.Subtitles,
                 IsHidden = e.IsHidden,
-                Routes = RoutesConfig.GetRouteDTOS(
-                    "myCourseList","updateCourse","deleteCourse",
-                    "getImage","setImage",
-                    "addRequirement","removeRequirement","updateRequirement",
-                    "addGained","removeGained","updateGained",
-                    "addSubtitle","removeSubtitle",
-                    "addLanguage", "removeLanguage"
-                    )
             };
         }
     }

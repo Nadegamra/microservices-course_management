@@ -1,6 +1,7 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Infrastructure.Routes;
 
 namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageDelete
 {
@@ -21,7 +22,7 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageDelete
         public override async Task HandleAsync(CourseLanguageDeleteRequest req, CancellationToken ct)
         {
             Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
-            CourseLanguage? language = courseDbContext.CourseLanguages.Where(x=>x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
+            CourseLanguage? language = courseDbContext.CourseLanguages.Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
             if (course == null || language == null)
             {
                 await SendErrorsAsync(400, ct);

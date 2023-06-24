@@ -1,10 +1,11 @@
-﻿namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
+﻿using Infrastructure.Routes;
+
+namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
 {
     public class UpdateSkillResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public RouteDTO[] Routes { get; set; }
     }
 }

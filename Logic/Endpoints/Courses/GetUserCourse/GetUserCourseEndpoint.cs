@@ -1,7 +1,6 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
-using CourseManagement.Logic.Endpoints;
-using FastEndpoints;
+using Infrastructure.Routes;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourse
