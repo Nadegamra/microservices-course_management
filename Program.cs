@@ -63,5 +63,7 @@ var app = builder.Build();
     var eventBus = app.Services.GetRequiredService<Infrastructure.EventBus.Generic.IEventBus>();
     eventBus.Subscribe<UserEmailChangedIntegrationEvent, UserEmailChangedIntegrationEventHandler>();
     eventBus.Subscribe<UserNameChangedIntegrationEvent, UserNameChangedIntegrationEventHandler>();
+    eventBus.Subscribe<CreatorDeletedIntegrationEvent, CreatorDeletedIntegrationEventHandler>();
+    eventBus.Subscribe<CreatorRegisteredIntegrationEvent, CreatorRegisteredIntegrationEventHandler>();
 }
 app.Run();
