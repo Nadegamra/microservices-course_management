@@ -16,7 +16,7 @@ namespace CourseManagement.IntegrationEvents.Handlers
 
         public async Task Handle(UserEmailChangedIntegrationEvent @event)
         {
-            Creator? creator = courseDbContext.Creators.Where(x=>x.Id == @event.UserId).FirstOrDefault();
+            Creator? creator = courseDbContext.Creators.Where(x => x.Id == @event.UserId).FirstOrDefault();
             if (creator != null && creator.Email == @event.OldEmail)
             {
                 creator.Email = @event.NewEmail;
