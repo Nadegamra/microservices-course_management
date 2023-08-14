@@ -4,7 +4,7 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
 {
-    public class GetSkillListEndpoint : Endpoint<EmptyRequest, GetSkillListResponse, GetSkillListMapper>
+    public class GetSkillListEndpoint : Endpoint<GetSkillListRequest, GetSkillListResponse, GetSkillListMapper>
     {
         public override void Configure()
         {
@@ -19,9 +19,9 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
             this.courseDbContext = courseDbContext;
         }
 
-        public override async Task HandleAsync(EmptyRequest req, CancellationToken ct)
+        public override async Task HandleAsync(GetSkillListRequest req, CancellationToken ct)
         {
-            List<Skill> skills = courseDbContext.Skills.ToList();
+            List<Skill> skills = courseDbContext.Skills.Skip(req.Skip).Take(req.Take).ToList();
             Response = Map.FromEntity(skills);
             await SendOkAsync(Response, ct);
         }

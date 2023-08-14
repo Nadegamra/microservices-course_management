@@ -21,6 +21,5 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourse
         public ICollection<GainedSkill>? GainedSkills { get; set; }
         public ICollection<CourseLanguage>? Languages { get; set; }
         public ICollection<CourseSubtitle>? Subtitles { get; set; }
-        public string ImageId { get; set; }
     }
 }

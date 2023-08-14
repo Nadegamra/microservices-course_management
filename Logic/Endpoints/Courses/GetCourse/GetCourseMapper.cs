@@ -25,7 +25,6 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourse
                 Languages = e.Languages,
                 Requirements = e.Requirements,
                 Subtitles = e.Subtitles,
-                ImageId = e.ImageId,
             };
         }
     }

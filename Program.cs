@@ -8,6 +8,7 @@ using CourseManagement.IntegrationEvents.Events;
 using Services.Common;
 using CourseManagement.Data;
 using CourseManagement.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +57,10 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
 
-    app.UseFastEndpoints();
+    app.UseFastEndpoints(c =>
+    {
+        c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+    });
 
     app.UseSwaggerGen();
 

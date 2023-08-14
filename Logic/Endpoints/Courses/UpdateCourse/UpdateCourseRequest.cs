@@ -8,16 +8,16 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
         [FromClaim("UserId")]
         public int UserId { get; set; }
         public int Id { get; set; }
-        public required string Name { get; set; }
-        public required string ShortDescription { get; set; }
-        public required string DetailedDescription { get; set; }
-        public required int LengthInDays { get; set; }
-        public required decimal Price { get; set; }
-        public required bool GrantsCertificate { get; set; }
-        public required decimal CertificatePrice { get; set; }
-        public required ActivityFormat ActivityFormat { get; set; }
-        public required ScheduleType ScheduleType { get; set; }
-        public required Difficulty Difficulty { get; set; }
-        public required bool IsHidden { get; set; }
+        public string? Name { get; set; }
+        public string? ShortDescription { get; set; }
+        public string? DetailedDescription { get; set; }
+        public int? LengthInDays { get; set; }
+        public decimal? Price { get; set; }
+        public bool? GrantsCertificate { get; set; }
+        public decimal? CertificatePrice { get; set; }
+        public ActivityFormat? ActivityFormat { get; set; }
+        public ScheduleType? ScheduleType { get; set; }
+        public Difficulty? Difficulty { get; set; }
+        public bool? IsHidden { get; set; }
     }
 }

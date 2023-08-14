@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourseList
     {
         public override void Configure()
         {
-            Get("courses/personal");
+            Get("courses/owned");
             Roles("ADMIN", "CREATOR");
         }
 
