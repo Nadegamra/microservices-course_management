@@ -8,6 +8,7 @@ using CourseManagement.IntegrationEvents.Events;
 using Services.Common;
 using CourseManagement.Data;
 using CourseManagement.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,7 @@ var services = builder.Services;
     ConfigureServices.AddEventBus(builder);
 
     builder.Services.AddTransient<IFileService, GoogleDriveFileService>();
+
     builder.Services.AddTransient<UserEmailChangedIntegrationEventHandler>();
     builder.Services.AddTransient<UserNameChangedIntegrationEventHandler>();
     builder.Services.AddTransient<CreatorRegisteredIntegrationEventHandler>();
@@ -59,7 +61,10 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
 
-    app.UseFastEndpoints();
+    app.UseFastEndpoints(c =>
+    {
+        c.Serializer.Options.Converters.Add(new JsonStringEnumConverter());
+    });
 
     app.UseSwaggerGen();
 
