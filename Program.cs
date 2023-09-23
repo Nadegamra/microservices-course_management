@@ -44,6 +44,9 @@ var services = builder.Services;
     builder.Services.AddTransient<IFileService, GoogleDriveFileService>();
     builder.Services.AddTransient<UserEmailChangedIntegrationEventHandler>();
     builder.Services.AddTransient<UserNameChangedIntegrationEventHandler>();
+    builder.Services.AddTransient<CreatorRegisteredIntegrationEventHandler>();
+    builder.Services.AddTransient<CreatorDeletedIntegrationEventHandler>();
+
 }
 var app = builder.Build();
 {

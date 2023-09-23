@@ -15,7 +15,7 @@ namespace CourseManagement.IntegrationEvents.Handlers
         }
         public async Task Handle(CreatorRegisteredIntegrationEvent @event)
         {
-            Creator? creator = new Creator { Id = @event.UserId, Email = @event.Email, Username = @event.Username };
+            Creator? creator = new Creator { Id = @event.UserId, Email = @event.Email, NormalizedEmail = @event.Email.ToUpper(), Username = @event.Username, NormalizedUsername = @event.Username.ToUpper(), Bio = "", Website = "" };
             courseDbContext.Creators.Add(creator);
             courseDbContext.SaveChanges();
         }
