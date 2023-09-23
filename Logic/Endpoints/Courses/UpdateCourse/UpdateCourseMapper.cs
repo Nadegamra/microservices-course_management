@@ -31,17 +31,21 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
 
         public override Course UpdateEntity(UpdateCourseRequest r, Course e)
         {
-            e.Name = r.Name;
-            e.ShortDescription = r.ShortDescription;
-            e.DetailedDescription = r.DetailedDescription;
-            e.LengthInDays = r.LengthInDays;
-            e.Price = r.Price;
-            e.GrantsCertificate = r.GrantsCertificate;
-            e.CertificatePrice = r.CertificatePrice;
-            e.ActivityFormat = r.ActivityFormat;
-            e.ScheduleType = r.ScheduleType;
-            e.Difficulty = r.Difficulty;
-            e.IsHidden = r.IsHidden;
+            e.Name = r.Name ?? e.Name;
+            e.ShortDescription = r.ShortDescription ?? e.ShortDescription;
+            e.DetailedDescription = r.DetailedDescription ?? e.DetailedDescription;
+            e.LengthInDays = r.LengthInDays ?? e.LengthInDays;
+            e.Price = r.Price ?? e.Price;
+            e.GrantsCertificate = r.GrantsCertificate ?? e.GrantsCertificate;
+            e.CertificatePrice = r.CertificatePrice ?? e.CertificatePrice;
+            if (!e.GrantsCertificate)
+            {
+                e.CertificatePrice = 0;
+            }
+            e.ActivityFormat = r.ActivityFormat ?? e.ActivityFormat;
+            e.ScheduleType = r.ScheduleType ?? e.ScheduleType;
+            e.Difficulty = r.Difficulty ?? e.Difficulty;
+            e.IsHidden = r.IsHidden ?? e.IsHidden;
             return e;
         }
     }
