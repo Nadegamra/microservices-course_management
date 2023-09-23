@@ -43,6 +43,7 @@ var services = builder.Services;
     ConfigureServices.AddEventBus(builder);
 
     builder.Services.AddTransient<IFileService, GoogleDriveFileService>();
+
     builder.Services.AddTransient<UserEmailChangedIntegrationEventHandler>();
     builder.Services.AddTransient<UserNameChangedIntegrationEventHandler>();
     builder.Services.AddTransient<CreatorRegisteredIntegrationEventHandler>();

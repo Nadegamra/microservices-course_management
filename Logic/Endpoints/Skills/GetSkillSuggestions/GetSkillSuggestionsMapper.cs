@@ -1,17 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CourseManagement.Data.Models;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillSuggestions
 {
-    public class GetSkillSuggestionsMapper : ResponseMapper<GetSkillSuggestionsResponse[], Skill[]>
+    public class GetSkillSuggestionsMapper : ResponseMapper<List<GetSkillSuggestionsResponse>, List<Skill>>
     {
-        public override GetSkillSuggestionsResponse[] FromEntity(Skill[] e)
+        public override List<GetSkillSuggestionsResponse> FromEntity(List<Skill> e)
         {
-            return e.Select(x => new GetSkillSuggestionsResponse { Name = x.Name, Id = x.Id }).ToArray();
+            return e.Select(x => new GetSkillSuggestionsResponse
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
         }
     }
 }

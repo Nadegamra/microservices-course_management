@@ -3,6 +3,7 @@ using System;
 using CourseManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagement.Migrations
 {
     [DbContext(typeof(CourseDbContext))]
-    partial class CourseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230923134815_DefaultCreator")]
+    partial class DefaultCreator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,80 +232,6 @@ namespace CourseManagement.Migrations
                         .IsUnique();
 
                     b.ToTable("Skills");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Programming language",
-                            Name = "C#"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Programming language",
-                            Name = "C"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Programming language",
-                            Name = "C++"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "C# Framework",
-                            Name = ".NET"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Containerization technology",
-                            Name = "Docker"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Design pattern",
-                            Name = "Redux"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Javascript library",
-                            Name = "React.js"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Programming language",
-                            Name = "Javascript"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Programming language",
-                            Name = "Typescript"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Relational database",
-                            Name = "MySQL"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Description = "Key-value noSQL database",
-                            Name = "Redis"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Description = "Programming language",
-                            Name = "Python"
-                        });
                 });
 
             modelBuilder.Entity("CourseManagement.Data.Models.CourseLanguage", b =>

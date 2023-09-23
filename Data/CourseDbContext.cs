@@ -1,4 +1,5 @@
-﻿using CourseManagement.Data.Models;
+﻿using System.Collections.Immutable;
+using CourseManagement.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Data
@@ -18,6 +19,23 @@ namespace CourseManagement.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Creator>().HasData(new Creator { Id = 2, Email = "creator@example.com", NormalizedEmail = "CREATOR@EXAMPLE.COM", Username = "creator@example.com", NormalizedUsername = "CREATOR@EXAMPLE.COM", Bio = "", Website = "" });
+
+            modelBuilder.Entity<Skill>().HasData(
+                new Skill { Id = 1, Name = "C#", Description = "Programming language" },
+                new Skill { Id = 2, Name = "C", Description = "Programming language" },
+                new Skill { Id = 3, Name = "C++", Description = "Programming language" },
+                new Skill { Id = 4, Name = ".NET", Description = "C# Framework" },
+                new Skill { Id = 5, Name = "Docker", Description = "Containerization technology" },
+                new Skill { Id = 6, Name = "Redux", Description = "Design pattern" },
+                new Skill { Id = 7, Name = "React.js", Description = "Javascript library" },
+                new Skill { Id = 8, Name = "Javascript", Description = "Programming language" },
+                new Skill { Id = 9, Name = "Typescript", Description = "Programming language" },
+                new Skill { Id = 10, Name = "MySQL", Description = "Relational database" },
+                new Skill { Id = 11, Name = "Redis", Description = "Key-value noSQL database" },
+                new Skill { Id = 12, Name = "Python", Description = "Programming language" }
+            );
         }
     }
 }

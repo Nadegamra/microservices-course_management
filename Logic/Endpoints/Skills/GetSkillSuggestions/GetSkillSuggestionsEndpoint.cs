@@ -5,7 +5,8 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillSuggestions
 {
-    public class GetSkillSuggestionsEndpoint : Endpoint<GetSkillSuggestionsRequest, GetSkillSuggestionsResponse[], GetSkillSuggestionsMapper>
+
+    public class GetSkillSuggestionsEndpoint : Endpoint<GetSkillSuggestionsRequest, List<GetSkillSuggestionsResponse>, GetSkillSuggestionsMapper>
     {
         public override void Configure()
         {
@@ -27,7 +28,7 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillSuggestions
                 await SendOkAsync(ct);
                 return;
             }
-            Skill[] skills = courseDbContext.Skills.Where(x => Regex.IsMatch(x.Name, req.Name)).Take(10).ToArray();
+            List<Skill> skills = courseDbContext.Skills.Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Name.ToLower())}).*$")).Take(5).ToList();
             Response = Map.FromEntity(skills);
             await SendOkAsync(Response, ct);
         }
