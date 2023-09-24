@@ -1,4 +1,6 @@
-﻿namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
+﻿using CourseManagement.Data.Models;
+
+namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 {
     public class GainedSkillCreateResponse
     {

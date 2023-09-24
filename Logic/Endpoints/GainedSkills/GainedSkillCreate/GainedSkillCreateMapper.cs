@@ -3,7 +3,7 @@ using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 {
-    public class GainedSkillCreateMapper: Mapper<GainedSkillCreateRequest, GainedSkillCreateResponse, GainedSkill>
+    public class GainedSkillCreateMapper : Mapper<GainedSkillCreateRequest, GainedSkillCreateResponse, GainedSkill>
     {
         public override GainedSkillCreateResponse FromEntity(GainedSkill e)
         {
