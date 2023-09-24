@@ -1,6 +1,7 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 {
@@ -23,7 +24,7 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
         {
             if (!courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).Any() ||
                 courseDbContext.GainedSkills.Where(x => req.SkillId != null && x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any()
-                || (req.SkillId != null && req.CustomDescription != null))
+                || (req.SkillId != null && req.CustomDescription != null && req.CustomDescription != ""))
             {
                 await SendErrorsAsync(400, ct);
                 return;
@@ -33,7 +34,7 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
             var res = courseDbContext.GainedSkills.Add(gainedSkill);
             courseDbContext.SaveChanges();
 
-            Response = Map.FromEntity(res.Entity);
+            Response = Map.FromEntity(courseDbContext.GainedSkills.Include(x => x.Skill).Where(x => x.Id == res.Entity.Id).First());
             await SendOkAsync(Response, ct);
         }
     }
