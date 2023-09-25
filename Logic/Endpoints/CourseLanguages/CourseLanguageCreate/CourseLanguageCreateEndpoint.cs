@@ -29,6 +29,9 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageCreate
                 return;
             }
 
+            int languagesCount = courseDbContext.CourseLanguages.Where(x => x.CourseId == req.CourseId).ToList().Count();
+
+            newLanguage.IsPrimary = languagesCount == 0;
             courseDbContext.CourseLanguages.Add(newLanguage);
             courseDbContext.SaveChanges();
             await SendOkAsync(ct);

@@ -12,7 +12,8 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageGetList
                 Id = x.Id,
                 CourseId = x.CourseId,
                 LanguageId = x.LanguageId,
-                Language = x.Language
+                Language = x.Language,
+                IsPrimary = x.IsPrimary
             }).ToList();
         }
     }

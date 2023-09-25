@@ -11,5 +11,6 @@ namespace CourseManagement.Data.Models
         [ForeignKey("Language")]
         public int LanguageId { get; set; }
         public Language Language { get; set; }
+        public bool IsPrimary { get; set; } = false;
     }
 }
