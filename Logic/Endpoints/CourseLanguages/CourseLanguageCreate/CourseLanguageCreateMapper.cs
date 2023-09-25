@@ -10,7 +10,7 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageCreate
             return new CourseLanguage()
             {
                 CourseId = r.CourseId,
-                Language = r.Language,
+                LanguageId = r.LanguageId
             };
         }
     }
