@@ -22,7 +22,7 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementC
         public override async Task HandleAsync(CourseRequirementCreateRequest req, CancellationToken ct)
         {
             Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
-            if (course == null || (req.SkillId != null && req.CustomDescription != null))
+            if (course == null || (req.SkillId != null && req.CustomDescription != null && req.CustomDescription != ""))
             {
                 await SendErrorsAsync(400, ct);
                 return;

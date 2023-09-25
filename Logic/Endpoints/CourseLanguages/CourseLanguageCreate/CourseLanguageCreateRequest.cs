@@ -8,6 +8,6 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageCreate
         [FromClaim("UserId")]
         public int UserId { get; set; }
         public int CourseId { get; set; }
-        public required Language Language { get; set; }
+        public int LanguageId { get; set; }
     }
 }

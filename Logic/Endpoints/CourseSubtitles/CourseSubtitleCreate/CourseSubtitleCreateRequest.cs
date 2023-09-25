@@ -1,5 +1,4 @@
-﻿using CourseManagement.Data.Enums;
-using FastEndpoints;
+﻿using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleCreate
 {
@@ -8,6 +7,6 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleCreate
         [FromClaim("UserId")]
         public int UserId { get; set; }
         public int CourseId { get; set; }
-        public required Language Language { get; set; }
+        public int LanguageId { get; set; }
     }
 }

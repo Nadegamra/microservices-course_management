@@ -8,6 +8,7 @@ namespace CourseManagement.Data
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Creator> Creators { get; set; }
+        public DbSet<Language> Languages { get; set; }
         public DbSet<CourseLanguage> CourseLanguages { get; set; }
         public DbSet<CourseSubtitle> CourseSubtitles { get; set; }
         public DbSet<CourseRequirement> CourseRequirements { get; set; }
