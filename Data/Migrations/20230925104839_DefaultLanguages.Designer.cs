@@ -3,6 +3,7 @@ using System;
 using CourseManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagement.Migrations
 {
     [DbContext(typeof(CourseDbContext))]
-    partial class CourseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230925104839_DefaultLanguages")]
+    partial class DefaultLanguages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,9 +87,6 @@ namespace CourseManagement.Migrations
 
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsPrimary")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
@@ -240,61 +240,6 @@ namespace CourseManagement.Migrations
                         {
                             Id = 2,
                             Name = "English"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Latvian"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Estonian"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Polish"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Ukrainian"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Russian"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "German"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Spanish"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Portugalish"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Italian"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Norwegian"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Swedish"
                         });
                 });
 
