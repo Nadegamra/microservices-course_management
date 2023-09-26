@@ -39,7 +39,18 @@ namespace CourseManagement.Data
 
             modelBuilder.Entity<Language>().HasData(
                 new Language { Id = 1, Name = "Lithuanian" },
-                new Language { Id = 2, Name = "English" }
+                new Language { Id = 2, Name = "English" },
+                new Language { Id = 3, Name = "Latvian" },
+                new Language { Id = 4, Name = "Estonian" },
+                new Language { Id = 5, Name = "Polish" },
+                new Language { Id = 6, Name = "Ukrainian" },
+                new Language { Id = 7, Name = "Russian" },
+                new Language { Id = 8, Name = "German" },
+                new Language { Id = 9, Name = "Spanish" },
+                new Language { Id = 10, Name = "Portugalish" },
+                new Language { Id = 11, Name = "Italian" },
+                new Language { Id = 12, Name = "Norwegian" },
+                new Language { Id = 13, Name = "Swedish" }
             );
         }
     }
