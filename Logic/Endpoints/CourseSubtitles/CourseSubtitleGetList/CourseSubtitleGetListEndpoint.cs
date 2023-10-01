@@ -1,6 +1,7 @@
 using CourseManagement.Data;
 using CourseManagement.Data.Models;
 using FastEndpoints;
+using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleGetList
 {
@@ -21,7 +22,7 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleGetList
 
         public override async Task HandleAsync(CourseSubtitleGetListRequest req, CancellationToken ct)
         {
-            List<CourseSubtitle> courseSubtitles = courseDbContext.CourseSubtitles.Where(x => x.CourseId == req.CourseId).ToList();
+            List<CourseSubtitle> courseSubtitles = courseDbContext.CourseSubtitles.Include(x => x.Language).Where(x => x.CourseId == req.CourseId).ToList();
             Response = Map.FromEntity(courseSubtitles);
             await SendOkAsync(Response, ct);
         }
