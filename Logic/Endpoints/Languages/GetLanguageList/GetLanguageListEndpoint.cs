@@ -8,7 +8,7 @@ namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageList
         public override void Configure()
         {
             Get("languages");
-            Roles("ADMIN");
+            AllowAnonymous();
         }
 
         private readonly CourseDbContext courseDbContext;
