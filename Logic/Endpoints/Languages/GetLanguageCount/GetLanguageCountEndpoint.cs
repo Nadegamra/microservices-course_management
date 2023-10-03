@@ -1,27 +1,27 @@
 using CourseManagement.Data;
 using FastEndpoints;
 
-namespace CourseManagement.Logic.Endpoints.Skills.GetSkillCount
+namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageCount
 {
-    public class GetSkillCountEndpoint : Endpoint<EmptyRequest, GetSkillCountResponse>
+    public class GetLanguageListEndpoint : Endpoint<EmptyRequest, GetLanguageCountResponse>
     {
         public override void Configure()
         {
-            Get("skills/count");
+            Get("languages/count");
             AllowAnonymous();
         }
 
         private readonly CourseDbContext courseDbContext;
 
-        public GetSkillCountEndpoint(CourseDbContext courseDbContext)
+        public GetLanguageListEndpoint(CourseDbContext courseDbContext)
         {
             this.courseDbContext = courseDbContext;
         }
 
         public override async Task HandleAsync(EmptyRequest req, CancellationToken ct)
         {
-            int count = courseDbContext.Skills.Count();
-            Response = new GetSkillCountResponse { Count = count };
+            int count = courseDbContext.Languages.Count();
+            Response = new GetLanguageCountResponse { Count = count };
             await SendOkAsync(Response, ct);
         }
     }
