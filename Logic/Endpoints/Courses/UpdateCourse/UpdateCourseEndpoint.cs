@@ -1,6 +1,8 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.IntegrationEvents.Events;
 using FastEndpoints;
+using Infrastructure.EventBus.Generic;
 
 namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
 {
@@ -13,10 +15,12 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
         }
 
         private readonly CourseDbContext courseDbContext;
+        private readonly Infrastructure.EventBus.Generic.IEventBus eventBus;
 
-        public UpdateCourseEndpoint(CourseDbContext courseDbContext)
+        public UpdateCourseEndpoint(CourseDbContext courseDbContext, Infrastructure.EventBus.Generic.IEventBus eventBus)
         {
             this.courseDbContext = courseDbContext;
+            this.eventBus = eventBus;
         }
 
         public override async Task HandleAsync(UpdateCourseRequest req, CancellationToken ct)
@@ -33,6 +37,14 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
             courseDbContext.SaveChanges();
 
             Response = Map.FromEntity(res.Entity);
+
+            eventBus.Publish(new CourseUpdatedIntegrationEvent()
+            {
+                Id = updated.Id,
+                IsHidden = updated.IsHidden,
+                IsDeleted = updated.IsDeleted
+            });
+
             await SendOkAsync(Response, ct);
         }
     }
