@@ -1,8 +1,8 @@
-﻿using FastEndpoints;
+using FastEndpoints;
 
-namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourseList
+namespace CourseManagement.Logic.Endpoints.Courses.GetUserCourseCount
 {
-    public class GetUserCourseListRequest
+    public class GetUserCourseCountRequest
     {
         [FromClaim("UserId")]
         public int UserId { get; set; }
