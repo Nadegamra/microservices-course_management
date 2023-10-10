@@ -22,10 +22,21 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourse
 
         public override async Task HandleAsync(GetCourseRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Include(x => x.Requirements).Include(x => x.GainedSkills).Include(x => x.Languages).Include(x => x.Subtitles).Where(x => x.Id == req.Id && !x.IsHidden && !x.IsDeleted).FirstOrDefault();
+            int userId = -1;
+            Course? course;
+            try
+            {
+                userId = Convert.ToInt32(User.Claims.Where(x => x.Type == "UserId").First().Value);
+                course = courseDbContext.Courses.Include(x => x.Requirements).Include(x => x.GainedSkills).Include(x => x.Languages).ThenInclude(x => x.Language).Include(x => x.Subtitles).ThenInclude(x => x.Language).Where(x => x.Id == req.Id && x.UserId == userId && !x.IsDeleted).FirstOrDefault();
+            }
+            catch
+            {
+                course = courseDbContext.Courses.Include(x => x.Requirements).Include(x => x.GainedSkills).Include(x => x.Languages).ThenInclude(x => x.Language).Include(x => x.Subtitles).ThenInclude(x => x.Language).Where(x => x.Id == req.Id && !x.IsHidden && !x.IsDeleted).FirstOrDefault();
+            }
+
             if (course == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
             Response = Map.FromEntity(course);

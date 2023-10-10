@@ -21,5 +21,6 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourseList
         public ICollection<GainedSkill>? GainedSkills { get; set; }
         public ICollection<CourseLanguage>? Languages { get; set; }
         public ICollection<CourseSubtitle>? Subtitles { get; set; }
+        public bool IsHidden { get; set; }
     }
 }

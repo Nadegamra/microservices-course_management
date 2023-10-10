@@ -23,12 +23,28 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourseList
 
         public override async Task HandleAsync(GetCourseListRequest req, CancellationToken ct)
         {
-            Course[] courses = courseDbContext.Courses
-                .Include(x => x.Requirements).Include(x => x.GainedSkills)
-                .Include(x => x.Languages).Include(x => x.Subtitles)
-                .Take(req.Take).Skip(req.Skip)
-                .Where(x => !x.IsHidden && !x.IsDeleted)
-                .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$")).ToArray();
+            int userId = -1;
+            Course[] courses = new Course[0];
+            try
+            {
+                userId = Convert.ToInt32(User.Claims.Where(x => x.Type == "UserId").First().Value);
+                courses = courseDbContext.Courses
+                    .Include(x => x.Requirements).Include(x => x.GainedSkills)
+                    .Include(x => x.Languages).Include(x => x.Subtitles)
+                    .Take(req.Take).Skip(req.Skip)
+                    .Where(x => x.UserId == userId && !x.IsDeleted)
+                    .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$")).ToArray();
+            }
+            catch
+            {
+                courses = courseDbContext.Courses
+                    .Include(x => x.Requirements).Include(x => x.GainedSkills)
+                    .Include(x => x.Languages).Include(x => x.Subtitles)
+                    .Take(req.Take).Skip(req.Skip)
+                    .Where(x => !x.IsHidden && !x.IsDeleted)
+                    .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$")).ToArray();
+            }
+
             Response = Map.FromEntity(courses);
             await SendOkAsync(Response, ct);
         }

@@ -25,6 +25,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourseList
                 Languages = x.Languages,
                 Requirements = x.Requirements,
                 Subtitles = x.Subtitles,
+                IsHidden = x.IsHidden
             }).ToList();
 
         }
