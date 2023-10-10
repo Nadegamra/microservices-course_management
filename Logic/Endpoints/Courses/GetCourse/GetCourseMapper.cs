@@ -25,6 +25,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourse
                 Languages = e.Languages,
                 Requirements = e.Requirements,
                 Subtitles = e.Subtitles,
+                IsHidden = e.IsHidden
             };
         }
     }
