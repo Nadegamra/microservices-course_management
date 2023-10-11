@@ -27,11 +27,11 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourse
             try
             {
                 userId = Convert.ToInt32(User.Claims.Where(x => x.Type == "UserId").First().Value);
-                course = courseDbContext.Courses.Include(x => x.Requirements).Include(x => x.GainedSkills).Include(x => x.Languages).ThenInclude(x => x.Language).Include(x => x.Subtitles).ThenInclude(x => x.Language).Where(x => x.Id == req.Id && x.UserId == userId && !x.IsDeleted).FirstOrDefault();
+                course = courseDbContext.Courses.Include(x => x.Requirements).ThenInclude(x => x.Skill).Include(x => x.GainedSkills).ThenInclude(x => x.Skill).Include(x => x.Languages).ThenInclude(x => x.Language).Include(x => x.Subtitles).ThenInclude(x => x.Language).Where(x => x.Id == req.Id && x.UserId == userId && !x.IsDeleted).FirstOrDefault();
             }
             catch
             {
-                course = courseDbContext.Courses.Include(x => x.Requirements).Include(x => x.GainedSkills).Include(x => x.Languages).ThenInclude(x => x.Language).Include(x => x.Subtitles).ThenInclude(x => x.Language).Where(x => x.Id == req.Id && !x.IsHidden && !x.IsDeleted).FirstOrDefault();
+                course = courseDbContext.Courses.Include(x => x.Requirements).ThenInclude(x => x.Skill).Include(x => x.GainedSkills).ThenInclude(x => x.Skill).Include(x => x.Languages).ThenInclude(x => x.Language).Include(x => x.Subtitles).ThenInclude(x => x.Language).Where(x => x.Id == req.Id && !x.IsHidden && !x.IsDeleted).FirstOrDefault();
             }
 
             if (course == null)
