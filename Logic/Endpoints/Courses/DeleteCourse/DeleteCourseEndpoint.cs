@@ -42,7 +42,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.DeleteCourse
                 UserId = course.UserId
             });
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }
