@@ -1,5 +1,5 @@
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using CourseManagement.IntegrationEvents.Events;
 using Infrastructure.EventBus.Generic.IntegrationEvents;
 
@@ -7,19 +7,18 @@ namespace CourseManagement.IntegrationEvents.Handlers
 {
     public class CreatorDeletedIntegrationEventHandler : IIntegrationEventHandler<CreatorDeletedIntegrationEvent>
     {
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Creator> repository;
 
-        public CreatorDeletedIntegrationEventHandler(CourseDbContext courseDbContext)
+        public CreatorDeletedIntegrationEventHandler(IRepository<Creator> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
         public async Task Handle(CreatorDeletedIntegrationEvent @event)
         {
-            Creator? creator = courseDbContext.Creators.FirstOrDefault(x => x.Id == @event.UserId);
+            Creator? creator = repository.Get(@event.UserId);
             if (creator != null)
             {
-                courseDbContext.Creators.Remove(creator);
-                courseDbContext.SaveChanges();
+                repository.Delete(creator);
             }
         }
     }

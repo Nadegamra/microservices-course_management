@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using CourseManagement.IntegrationEvents.Events;
 using Infrastructure.EventBus.Generic.IntegrationEvents;
 
@@ -7,22 +7,21 @@ namespace CourseManagement.IntegrationEvents.Handlers
 {
     public class UserNameChangedIntegrationEventHandler : IIntegrationEventHandler<UserNameChangedIntegrationEvent>
     {
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Creator> repository;
 
-        public UserNameChangedIntegrationEventHandler(CourseDbContext courseDbContext)
+        public UserNameChangedIntegrationEventHandler(IRepository<Creator> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public async Task Handle(UserNameChangedIntegrationEvent @event)
         {
-            Creator? creator = courseDbContext.Creators.Where(x => x.Id == @event.UserId).FirstOrDefault();
+            Creator? creator = repository.Get(@event.UserId);
             if (creator != null && creator.Username == @event.OldUserName)
             {
                 creator.Username = @event.NewUserName;
                 creator.NormalizedUsername = @event.NewUserName.ToUpper();
-                courseDbContext.Creators.Update(creator);
-                await courseDbContext.SaveChangesAsync();
+                repository.Update(creator);
             }
         }
     }

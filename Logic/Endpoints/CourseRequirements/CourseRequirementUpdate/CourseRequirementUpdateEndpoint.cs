@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementUpdate
@@ -12,17 +12,23 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementU
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<CourseRequirement> courseRequirementRepository;
 
-        public CourseRequirementUpdateEndpoint(CourseDbContext courseDbContext)
+        public CourseRequirementUpdateEndpoint(IRepository<Course> courseRepository, IRepository<CourseRequirement> courseRequirementRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.courseRequirementRepository = courseRequirementRepository;
         }
 
         public override async Task HandleAsync(CourseRequirementUpdateRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
-            CourseRequirement? requirement = courseDbContext.CourseRequirements.Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
+            Course? course = courseRepository.GetAll()
+                                .Where(x => x.Id == req.CourseId && x.UserId == req.UserId)
+                                .FirstOrDefault();
+            CourseRequirement? requirement = courseRequirementRepository.GetAll()
+                                            .Where(x => x.Id == req.Id && x.CourseId == req.CourseId)
+                                            .FirstOrDefault();
 
             if (course == null || requirement == null || requirement.SkillId != null)
             {
@@ -31,8 +37,7 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementU
             }
 
             requirement = Map.UpdateEntity(req, requirement);
-            courseDbContext.CourseRequirements.Update(requirement);
-            courseDbContext.SaveChanges();
+            courseRequirementRepository.Update(requirement);
 
             await SendOkAsync(ct);
         }

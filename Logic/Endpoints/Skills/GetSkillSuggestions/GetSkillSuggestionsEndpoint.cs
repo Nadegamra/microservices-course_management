@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillSuggestions
@@ -14,11 +14,11 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillSuggestions
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Skill> repository;
 
-        public GetSkillSuggestionsEndpoint(CourseDbContext courseDbContext)
+        public GetSkillSuggestionsEndpoint(IRepository<Skill> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(GetSkillSuggestionsRequest req, CancellationToken ct)
@@ -28,7 +28,7 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillSuggestions
                 await SendOkAsync(ct);
                 return;
             }
-            List<Skill> skills = courseDbContext.Skills.Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Name.ToLower())}).*$")).Take(5).ToList();
+            List<Skill> skills = repository.GetAll().Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Name.ToLower())}).*$")).Take(5).ToList();
             Response = Map.FromEntity(skills);
             await SendOkAsync(Response, ct);
         }

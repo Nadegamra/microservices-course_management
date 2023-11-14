@@ -1,5 +1,5 @@
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Languages.AddLanguage
@@ -12,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.Languages.AddLanguage
             Roles("ADMIN");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Language> repository;
 
-        public AddLanguageEndpoint(CourseDbContext courseDbContext)
+        public AddLanguageEndpoint(IRepository<Language> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(AddLanguageRequest req, CancellationToken ct)
         {
-            List<Language> languages = courseDbContext.Languages.Where(x => x.Name.ToUpper() == req.Name.ToUpper()).ToList();
+            List<Language> languages = repository.GetAll().Where(x => x.Name.ToUpper() == req.Name.ToUpper()).ToList();
             if (languages.Count > 0)
             {
                 await SendErrorsAsync(400, ct);
@@ -29,8 +29,7 @@ namespace CourseManagement.Logic.Endpoints.Languages.AddLanguage
             }
 
             Language newLanguage = Map.ToEntity(req);
-            courseDbContext.Add(newLanguage);
-            courseDbContext.SaveChanges();
+            repository.Add(newLanguage);
         }
     }
 }

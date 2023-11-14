@@ -1,4 +1,5 @@
-using CourseManagement.Data;
+using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillCount
@@ -11,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillCount
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Skill> repository;
 
-        public GetSkillCountEndpoint(CourseDbContext courseDbContext)
+        public GetSkillCountEndpoint(IRepository<Skill> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(EmptyRequest req, CancellationToken ct)
         {
-            int count = courseDbContext.Skills.Count();
+            int count = repository.GetAll().Count();
             Response = new GetSkillCountResponse { Count = count };
             await SendOkAsync(Response, ct);
         }

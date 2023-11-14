@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
@@ -12,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillList
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Skill> repository;
 
-        public GetSkillListEndpoint(CourseDbContext courseDbContext)
+        public GetSkillListEndpoint(IRepository<Skill> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(GetSkillListRequest req, CancellationToken ct)
         {
-            List<Skill> skills = courseDbContext.Skills.Skip(req.Skip).Take(req.Take).ToList();
+            List<Skill> skills = repository.GetAll().Skip(req.Skip).Take(req.Take).ToList();
             Response = Map.FromEntity(skills);
             await SendOkAsync(Response, ct);
         }

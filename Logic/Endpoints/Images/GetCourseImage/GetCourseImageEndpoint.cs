@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using CourseManagement.Services;
 using FastEndpoints;
 
@@ -14,18 +14,18 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
             Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromHours(24))));
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> repository;
         private readonly IFileService fileService;
 
-        public GetCourseImageEndpoint(CourseDbContext courseDbContext, IFileService fileService)
+        public GetCourseImageEndpoint(IFileService fileService, IRepository<Course> repository)
         {
-            this.courseDbContext = courseDbContext;
             this.fileService = fileService;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(GetCourseImageRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId).FirstOrDefault();
+            Course? course = repository.Get(req.CourseId);
             if (course == null || course.ImageId.Length == 0)
             {
                 await SendErrorsAsync(400, ct);
@@ -37,7 +37,7 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
 
                 await SendStreamAsync(file.OpenReadStream(), fileName: file.FileName, cancellation: ct);
             }
-            catch (Exception ex)
+            catch
             {
                 await SendNotFoundAsync(ct);
             }

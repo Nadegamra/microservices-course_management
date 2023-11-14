@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillDelete
@@ -12,24 +12,25 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillDelete
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<GainedSkill> gainedSkillsRepository;
 
-        public GainedSkillDeleteEndpoint(CourseDbContext courseDbContext)
+        public GainedSkillDeleteEndpoint(IRepository<Course> courseRepository, IRepository<GainedSkill> gainedSkillsRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.gainedSkillsRepository = gainedSkillsRepository;
         }
 
         public override async Task HandleAsync(GainedSkillDeleteRequest req, CancellationToken ct)
         {
-            GainedSkill? skill = courseDbContext.GainedSkills.Where(x => x.Id == req.Id).FirstOrDefault();
-            if (skill == null || !courseDbContext.Courses.Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
+            GainedSkill? skill = gainedSkillsRepository.Get(req.Id);
+            if (skill == null || !courseRepository.GetAll().Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
 
-            courseDbContext.GainedSkills.Remove(skill);
-            courseDbContext.SaveChanges();
+            gainedSkillsRepository.Delete(skill);
             await SendOkAsync(ct);
         }
     }

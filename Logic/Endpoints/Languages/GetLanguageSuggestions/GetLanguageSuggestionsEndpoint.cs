@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageSuggestions
@@ -13,11 +13,11 @@ namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageSuggestions
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Language> repository;
 
-        public GetLanguageSuggestionsEndpoint(CourseDbContext courseDbContext)
+        public GetLanguageSuggestionsEndpoint(IRepository<Language> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(GetLanguageSuggestionsRequest req, CancellationToken ct)
@@ -27,7 +27,7 @@ namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageSuggestions
                 await SendOkAsync(ct);
                 return;
             }
-            List<Language> languages = courseDbContext.Languages.Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Name.ToLower())}).*$")).Take(5).ToList();
+            List<Language> languages = repository.GetAll().Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Name.ToLower())}).*$")).Take(5).ToList();
             Response = Map.FromEntity(languages);
             await SendOkAsync(Response, ct);
         }

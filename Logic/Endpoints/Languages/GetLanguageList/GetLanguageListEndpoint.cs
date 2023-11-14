@@ -1,4 +1,5 @@
-using CourseManagement.Data;
+using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageList
@@ -11,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageList
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Language> repository;
 
-        public GetLanguageListEndpoint(CourseDbContext courseDbContext)
+        public GetLanguageListEndpoint(IRepository<Language> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(GetLanguageListRequest req, CancellationToken ct)
         {
-            List<Data.Models.Language> languages = courseDbContext.Languages.Skip(req.Skip).Take(req.Take).ToList();
+            List<Language> languages = repository.GetAll().Skip(req.Skip).Take(req.Take).ToList();
             Response = Map.FromEntity(languages);
             await SendOkAsync(Response, ct);
         }

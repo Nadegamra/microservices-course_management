@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using System.Text.RegularExpressions;
-using CourseManagement.Data;
+using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Courses.GetCourseCount
@@ -12,31 +14,22 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourseCount
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> repository;
 
-        public GetCourseCountEndpoint(CourseDbContext courseDbContext)
+        public GetCourseCountEndpoint(IRepository<Course> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public async override Task HandleAsync(GetCourseCountRequest req, CancellationToken ct)
         {
-            int userId = -1;
-            int count = -1;
-            try
-            {
-                userId = Convert.ToInt32(User.Claims.Where(x => x.Type == "UserId").First().Value);
-                courseDbContext.Courses
-                    .Take(req.Take).Skip(req.Skip)
-                    .Where(x => x.UserId == userId && !x.IsDeleted)
-                    .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$")).Count();
-            }
-            catch
-            {
-                count = courseDbContext.Courses
-                    .Where(x => !x.IsHidden && !x.IsDeleted)
-                    .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$")).Count();
-            }
+            Claim? claim = User.Claims.Where(x => x.Type == "UserId").First();
+            int? userId = claim != null ? int.Parse(claim.Value) : null;
+
+            int count = repository.GetAll()
+                            .Where(x => !x.IsDeleted && (x.UserId == userId || !x.IsHidden))
+                            .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$"))
+                            .Count();
 
             Response = new GetCourseCountResponse { Count = count };
             await SendOkAsync(Response, ct);

@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementDelete
@@ -12,25 +12,30 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementD
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<CourseRequirement> courseRequirementRepository;
 
-        public CourseRequirementDeleteEndpoint(CourseDbContext courseDbContext)
+        public CourseRequirementDeleteEndpoint(IRepository<Course> courseRepository, IRepository<CourseRequirement> courseRequirementRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.courseRequirementRepository = courseRequirementRepository;
         }
 
         public override async Task HandleAsync(CourseRequirementDeleteRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
-            CourseRequirement? requirement = courseDbContext.CourseRequirements.Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
+            Course? course = courseRepository.GetAll()
+                                .Where(x => x.Id == req.CourseId && x.UserId == req.UserId)
+                                .FirstOrDefault();
+            CourseRequirement? requirement = courseRequirementRepository.GetAll()
+                                                .Where(x => x.Id == req.Id && x.CourseId == req.CourseId)
+                                                .FirstOrDefault();
             if (course == null || requirement == null)
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
 
-            courseDbContext.CourseRequirements.Remove(requirement);
-            courseDbContext.SaveChanges();
+            courseRequirementRepository.Delete(requirement);
             await SendOkAsync(ct);
 
         }

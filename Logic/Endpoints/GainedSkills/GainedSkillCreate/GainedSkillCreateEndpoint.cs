@@ -1,7 +1,7 @@
 ﻿using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 {
@@ -13,17 +13,19 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<GainedSkill> gainedSkillsRepository;
 
-        public GainedSkillCreateEndpoint(CourseDbContext courseDbContext)
+        public GainedSkillCreateEndpoint(IRepository<Course> courseRepository, IRepository<GainedSkill> gainedSkillsRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.gainedSkillsRepository = gainedSkillsRepository;
         }
 
         public override async Task HandleAsync(GainedSkillCreateRequest req, CancellationToken ct)
         {
-            if (!courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).Any() ||
-                courseDbContext.GainedSkills.Where(x => req.SkillId != null && x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any()
+            if (!courseRepository.GetAll().Where(x => x.Id == req.CourseId && x.UserId == req.UserId).Any() ||
+                gainedSkillsRepository.GetAll().Where(x => req.SkillId != null && x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any()
                 || (req.SkillId != null && req.CustomDescription != null && req.CustomDescription != ""))
             {
                 await SendErrorsAsync(400, ct);
@@ -31,10 +33,9 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
             }
 
             GainedSkill gainedSkill = Map.ToEntity(req);
-            var res = courseDbContext.GainedSkills.Add(gainedSkill);
-            courseDbContext.SaveChanges();
+            var res = gainedSkillsRepository.Add(gainedSkill);
 
-            Response = Map.FromEntity(courseDbContext.GainedSkills.Include(x => x.Skill).Where(x => x.Id == res.Entity.Id).First());
+            Response = Map.FromEntity(gainedSkillsRepository.Get(res.Id));
             await SendOkAsync(Response, ct);
         }
     }

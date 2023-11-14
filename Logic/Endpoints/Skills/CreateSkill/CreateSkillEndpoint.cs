@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.CreateSkill
@@ -12,26 +12,25 @@ namespace CourseManagement.Logic.Endpoints.Skills.CreateSkill
             Roles("ADMIN");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Skill> repository;
 
-        public CreateSkillEndpoint(CourseDbContext courseDbContext)
+        public CreateSkillEndpoint(IRepository<Skill> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(CreateSkillRequest req, CancellationToken ct)
         {
-            if (courseDbContext.Skills.Where(x => x.Name == req.Name).Any())
+            if (repository.GetAll().Where(x => x.Name == req.Name).Any())
             {
                 await SendErrorsAsync(400, ct);
             }
 
             Skill skill = Map.ToEntity(req);
 
-            var res = courseDbContext.Skills.Add(skill);
-            courseDbContext.SaveChanges();
+            var res = repository.Add(skill);
 
-            Response = Map.FromEntity(res.Entity);
+            Response = Map.FromEntity(res);
             await SendOkAsync(Response, ct);
         }
     }

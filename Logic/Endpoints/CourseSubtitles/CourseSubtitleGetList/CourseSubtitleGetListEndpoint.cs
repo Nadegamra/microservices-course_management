@@ -1,7 +1,6 @@
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleGetList
 {
@@ -13,16 +12,18 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleGetList
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<CourseSubtitle> courseSubtitleRepository;
 
-        public CourseSubtitleGetListEndpoint(CourseDbContext courseDbContext)
+        public CourseSubtitleGetListEndpoint(IRepository<Course> courseRepository, IRepository<CourseSubtitle> courseSubtitleRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.courseSubtitleRepository = courseSubtitleRepository;
         }
 
         public override async Task HandleAsync(CourseSubtitleGetListRequest req, CancellationToken ct)
         {
-            List<CourseSubtitle> courseSubtitles = courseDbContext.CourseSubtitles.Include(x => x.Language).Where(x => x.CourseId == req.CourseId).ToList();
+            List<CourseSubtitle> courseSubtitles = courseSubtitleRepository.GetAll().Where(x => x.CourseId == req.CourseId).ToList();
             Response = Map.FromEntity(courseSubtitles);
             await SendOkAsync(Response, ct);
         }

@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageDelete
@@ -12,25 +12,30 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageDelete
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<CourseLanguage> courseLanguageRepository;
 
-        public CourseLanguageDeleteEndpoint(CourseDbContext courseDbContext)
+        public CourseLanguageDeleteEndpoint(IRepository<Course> courseRepository, IRepository<CourseLanguage> courseLanguageRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.courseLanguageRepository = courseLanguageRepository;
         }
 
         public override async Task HandleAsync(CourseLanguageDeleteRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
-            CourseLanguage? language = courseDbContext.CourseLanguages.Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
+            Course? course = courseRepository.GetAll()
+                                .Where(x => x.Id == req.CourseId && x.UserId == req.UserId)
+                                .FirstOrDefault();
+            CourseLanguage? language = courseLanguageRepository.GetAll()
+                                .Where(x => x.Id == req.Id && x.CourseId == req.CourseId)
+                                .FirstOrDefault();
             if (course == null || language == null)
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
 
-            courseDbContext.CourseLanguages.Remove(language);
-            courseDbContext.SaveChanges();
+            courseLanguageRepository.Delete(language);
 
             await SendOkAsync(ct);
         }

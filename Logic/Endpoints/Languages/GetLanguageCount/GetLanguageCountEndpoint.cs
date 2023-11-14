@@ -1,4 +1,5 @@
-using CourseManagement.Data;
+using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageCount
@@ -11,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageCount
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Language> repository;
 
-        public GetLanguageListEndpoint(CourseDbContext courseDbContext)
+        public GetLanguageListEndpoint(IRepository<Language> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(EmptyRequest req, CancellationToken ct)
         {
-            int count = courseDbContext.Languages.Count();
+            int count = repository.GetAll().Count();
             Response = new GetLanguageCountResponse { Count = count };
             await SendOkAsync(Response, ct);
         }
