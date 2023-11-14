@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
@@ -12,24 +12,23 @@ namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
             Roles("ADMIN");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Skill> repository;
 
-        public DeleteSkillEndpoint(CourseDbContext courseDbContext)
+        public DeleteSkillEndpoint(IRepository<Skill> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(DeleteSkillRequest req, CancellationToken ct)
         {
-            Skill? skill = courseDbContext.Skills.Where(x => x.Id == req.Id).FirstOrDefault();
+            Skill? skill = repository.Get(req.Id);
             if (skill == null)
             {
-                await SendErrorsAsync(418, ct);
+                await SendErrorsAsync(400, ct);
                 return;
             }
 
-            courseDbContext.Skills.Remove(skill);
-            courseDbContext.SaveChanges();
+            repository.Delete(skill);
             await SendOkAsync(ct);
         }
     }

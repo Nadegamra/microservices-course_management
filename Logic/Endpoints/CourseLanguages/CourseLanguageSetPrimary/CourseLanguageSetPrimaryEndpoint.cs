@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageSetPrimary
@@ -16,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageSetPrim
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<CourseLanguage> repository;
 
-        public CourseLanguageSetPrimaryEndpoint(CourseDbContext courseDbContext)
+        public CourseLanguageSetPrimaryEndpoint(IRepository<CourseLanguage> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(CourseLanguageSetPrimaryRequest req, CancellationToken ct)
         {
-            List<CourseLanguage> languages = courseDbContext.CourseLanguages.Where(x => x.CourseId == req.CourseId).ToList();
+            List<CourseLanguage> languages = repository.GetAll().Where(x => x.CourseId == req.CourseId).ToList();
             foreach (var language in languages)
             {
                 if (language.Id != req.Id)
@@ -36,9 +32,8 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageSetPrim
                 {
                     language.IsPrimary = true;
                 }
-                courseDbContext.CourseLanguages.Update(language);
+                repository.Update(language);
             }
-            courseDbContext.SaveChanges();
             await SendOkAsync(ct);
         }
     }

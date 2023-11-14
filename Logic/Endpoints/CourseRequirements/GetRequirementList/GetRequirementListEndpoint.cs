@@ -1,7 +1,6 @@
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
-using Microsoft.EntityFrameworkCore;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.GetRequirementList
 {
@@ -13,16 +12,18 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.GetRequirementList
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<CourseRequirement> courseRequirementRepository;
 
-        public GetRequirementListEndpoint(CourseDbContext courseDbContext)
+        public GetRequirementListEndpoint(IRepository<CourseRequirement> courseRequirementRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRequirementRepository = courseRequirementRepository;
         }
 
         public override async Task HandleAsync(GetRequirementListRequest req, CancellationToken ct)
         {
-            List<CourseRequirement> requirements = courseDbContext.CourseRequirements.Include(x => x.Skill).Where(x => x.CourseId == req.CourseId).ToList();
+            List<CourseRequirement> requirements = courseRequirementRepository.GetAll()
+                                                    .Where(x => x.CourseId == req.CourseId)
+                                                    .ToList();
             Response = Map.FromEntity(requirements);
             await SendOkAsync(Response, ct);
         }

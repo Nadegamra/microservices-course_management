@@ -1,5 +1,5 @@
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Languages.RemoveLanguage
@@ -12,20 +12,19 @@ namespace CourseManagement.Logic.Endpoints.Languages.RemoveLanguage
             Roles("ADMIN");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Language> repository;
 
-        public RemoveLanguageEndpoint(CourseDbContext courseDbContext)
+        public RemoveLanguageEndpoint(IRepository<Language> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(RemoveLanguageRequest req, CancellationToken ct)
         {
-            Language? language = courseDbContext.Languages.Where(x => x.Id == req.Id).FirstOrDefault();
+            Language? language = repository.Get(req.Id);
             if (language != null)
             {
-                courseDbContext.Languages.Remove(language);
-                courseDbContext.SaveChanges();
+                repository.Delete(language);
             }
             await SendOkAsync(ct);
         }

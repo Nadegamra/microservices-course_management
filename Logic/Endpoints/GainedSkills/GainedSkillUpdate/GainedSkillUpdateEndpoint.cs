@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillUpdate
@@ -12,26 +12,27 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillUpdate
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<GainedSkill> gainedSkillsRepository;
 
-        public GainedSkillUpdateEndpoint(CourseDbContext courseDbContext)
+        public GainedSkillUpdateEndpoint(IRepository<Course> courseRepository, IRepository<GainedSkill> gainedSkillsRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.gainedSkillsRepository = gainedSkillsRepository;
         }
 
         public override async Task HandleAsync(GainedSkillUpdateRequest req, CancellationToken ct)
         {
-            GainedSkill? skill = courseDbContext.GainedSkills.Where(x => x.Id == req.Id && x.SkillId == null).FirstOrDefault();
-            if (skill == null || !courseDbContext.Courses.Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
+            GainedSkill? skill = gainedSkillsRepository.GetAll().Where(x => x.Id == req.Id && x.SkillId == null).FirstOrDefault();
+            if (skill == null || !courseRepository.GetAll().Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
 
             skill = Map.UpdateEntity(req, skill);
-            var res = courseDbContext.Update(skill);
-            courseDbContext.SaveChanges();
-            Response = Map.FromEntity(res.Entity);
+            var res = gainedSkillsRepository.Update(skill);
+            Response = Map.FromEntity(res);
             await SendOkAsync(Response, ct);
         }
     }

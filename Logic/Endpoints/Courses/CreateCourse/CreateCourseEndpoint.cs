@@ -1,8 +1,7 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using CourseManagement.IntegrationEvents.Events;
 using FastEndpoints;
-using Infrastructure.EventBus.Generic;
 
 namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
 {
@@ -14,23 +13,22 @@ namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> repository;
         private readonly Infrastructure.EventBus.Generic.IEventBus eventBus;
 
-        public CreateCourseEndpoint(CourseDbContext courseDbContext, Infrastructure.EventBus.Generic.IEventBus eventBus)
+        public CreateCourseEndpoint(Infrastructure.EventBus.Generic.IEventBus eventBus, IRepository<Course> repository)
         {
-            this.courseDbContext = courseDbContext;
             this.eventBus = eventBus;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(CreateCourseRequest req, CancellationToken ct)
         {
             Course course = Map.ToEntity(req);
 
-            var res = courseDbContext.Courses.Add(course);
-            courseDbContext.SaveChanges();
+            var res = repository.Add(course);
 
-            Response = Map.FromEntity(res.Entity);
+            Response = Map.FromEntity(res);
 
             eventBus.Publish(new CourseCreatedIntegrationEvent()
             {

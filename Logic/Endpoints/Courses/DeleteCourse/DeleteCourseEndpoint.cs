@@ -1,8 +1,7 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using CourseManagement.IntegrationEvents.Events;
 using FastEndpoints;
-using Infrastructure.EventBus.Generic;
 
 namespace CourseManagement.Logic.Endpoints.Courses.DeleteCourse
 {
@@ -14,18 +13,18 @@ namespace CourseManagement.Logic.Endpoints.Courses.DeleteCourse
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> repository;
         private readonly Infrastructure.EventBus.Generic.IEventBus eventBus;
 
-        public DeleteCourseEndpoint(CourseDbContext courseDbContext, Infrastructure.EventBus.Generic.IEventBus eventBus)
+        public DeleteCourseEndpoint(Infrastructure.EventBus.Generic.IEventBus eventBus, IRepository<Course> repository)
         {
-            this.courseDbContext = courseDbContext;
             this.eventBus = eventBus;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(DeleteCourseRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.Id).FirstOrDefault();
+            Course? course = repository.Get(req.Id);
             if (course == null || course.UserId != req.UserId)
             {
                 await SendErrorsAsync(400, ct);
@@ -33,8 +32,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.DeleteCourse
             }
 
             course.IsDeleted = true;
-            var res = courseDbContext.Courses.Update(course);
-            courseDbContext.SaveChanges();
+            var res = repository.Update(course);
 
             eventBus.Publish(new CourseCreatedIntegrationEvent()
             {

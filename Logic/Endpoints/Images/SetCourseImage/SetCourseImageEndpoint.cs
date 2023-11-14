@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using CourseManagement.Services;
 using FastEndpoints;
 
@@ -14,18 +14,18 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
             AllowFileUploads();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> repository;
         private readonly IFileService fileService;
 
-        public SetCourseImageEndpoint(CourseDbContext courseDbContext, IFileService fileService)
+        public SetCourseImageEndpoint(IFileService fileService, IRepository<Course> repository)
         {
-            this.courseDbContext = courseDbContext;
             this.fileService = fileService;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(SetCourseImageRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
+            Course? course = repository.GetAll().Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
             string imageId;
             if (course == null)
             {
@@ -37,8 +37,7 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
                 imageId = await fileService.UploadFile(req.Image);
 
                 course.ImageId = imageId;
-                courseDbContext.Courses.Update(course);
-                courseDbContext.SaveChanges();
+                repository.Update(course);
             }
             else
             {
@@ -46,8 +45,7 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
                 var task2 = fileService.DeleteFile(course.ImageId);
 
                 course.ImageId = await task1;
-                courseDbContext.Courses.Update(course);
-                courseDbContext.SaveChanges();
+                repository.Update(course);
 
                 await task2;
             }

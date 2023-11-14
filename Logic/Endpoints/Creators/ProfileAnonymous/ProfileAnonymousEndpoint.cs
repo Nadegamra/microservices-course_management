@@ -1,5 +1,5 @@
-using CourseManagement.Data;
 using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Creators.ProfileAnonymous
@@ -12,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.Creators.ProfileAnonymous
             AllowAnonymous();
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Creator> repository;
 
-        public ProfileAnonymousEndpoint(CourseDbContext courseDbContext)
+        public ProfileAnonymousEndpoint(IRepository<Creator> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public async override Task HandleAsync(ProfileAnonymousRequest req, CancellationToken ct)
         {
-            Creator? creator = courseDbContext.Creators.Where(x => x.Id == req.UserId).FirstOrDefault();
+            Creator? creator = repository.Get(req.UserId);
             if (creator == null)
             {
                 await SendErrorsAsync(400, ct);

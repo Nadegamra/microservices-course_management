@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleDelete
@@ -12,25 +12,27 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleDelete
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<CourseSubtitle> courseSubtitleRepository;
 
-        public CourseSubtitleDeleteEndpoint(CourseDbContext courseDbContext)
+
+        public CourseSubtitleDeleteEndpoint(IRepository<Course> courseRepository, IRepository<CourseSubtitle> courseSubtitleRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.courseSubtitleRepository = courseSubtitleRepository;
         }
 
         public override async Task HandleAsync(CourseSubtitleDeleteRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
-            CourseSubtitle? subtitle = courseDbContext.CourseSubtitles.Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
+            Course? course = courseRepository.GetAll().Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
+            CourseSubtitle? subtitle = courseSubtitleRepository.GetAll().Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
             if (course == null || subtitle == null)
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
 
-            courseDbContext.CourseSubtitles.Remove(subtitle);
-            courseDbContext.SaveChanges();
+            courseSubtitleRepository.Delete(subtitle);
 
             await SendOkAsync(ct);
         }

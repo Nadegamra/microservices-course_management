@@ -1,8 +1,7 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using CourseManagement.IntegrationEvents.Events;
 using FastEndpoints;
-using Infrastructure.EventBus.Generic;
 
 namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
 {
@@ -14,18 +13,20 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> repository;
         private readonly Infrastructure.EventBus.Generic.IEventBus eventBus;
 
-        public UpdateCourseEndpoint(CourseDbContext courseDbContext, Infrastructure.EventBus.Generic.IEventBus eventBus)
+        public UpdateCourseEndpoint(Infrastructure.EventBus.Generic.IEventBus eventBus, IRepository<Course> repository)
         {
-            this.courseDbContext = courseDbContext;
             this.eventBus = eventBus;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(UpdateCourseRequest req, CancellationToken ct)
         {
-            Course? original = courseDbContext.Courses.Where(x => x.Id == req.Id && x.UserId == req.UserId).FirstOrDefault();
+            Course? original = repository.GetAll()
+                                .Where(x => x.Id == req.Id && x.UserId == req.UserId)
+                                .FirstOrDefault();
             if (original == null)
             {
                 await SendErrorsAsync(418, ct);
@@ -33,10 +34,9 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
             }
 
             Course updated = Map.UpdateEntity(req, original);
-            var res = courseDbContext.Courses.Update(updated);
-            courseDbContext.SaveChanges();
+            var res = repository.Update(updated);
 
-            Response = Map.FromEntity(res.Entity);
+            Response = Map.FromEntity(res);
 
             eventBus.Publish(new CourseUpdatedIntegrationEvent()
             {

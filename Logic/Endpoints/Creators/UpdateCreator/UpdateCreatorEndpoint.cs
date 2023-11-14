@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Creators.UpdateCreator
@@ -12,16 +12,16 @@ namespace CourseManagement.Logic.Endpoints.Creators.UpdateCreator
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Creator> repository;
 
-        public UpdateCreatorEndpoint(CourseDbContext courseDbContext)
+        public UpdateCreatorEndpoint(IRepository<Creator> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(UpdateCreatorRequest req, CancellationToken ct)
         {
-            Creator? original = courseDbContext.Creators.Where(x => x.Id == req.UserId).FirstOrDefault();
+            Creator? original = repository.Get(req.UserId);
             if (original == null)
             {
                 await SendErrorsAsync(400, ct);
@@ -29,8 +29,7 @@ namespace CourseManagement.Logic.Endpoints.Creators.UpdateCreator
             }
 
             Creator updated = Map.UpdateEntity(req, original);
-            courseDbContext.Creators.Update(updated);
-            courseDbContext.SaveChanges();
+            repository.Update(updated);
 
             await SendOkAsync(ct);
         }

@@ -9,6 +9,8 @@ using Services.Common;
 using CourseManagement.Data;
 using CourseManagement.Services;
 using System.Text.Json.Serialization;
+using CourseManagement.Data.Repositories;
+using CourseManagement.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,8 +44,20 @@ var services = builder.Services;
     // Event Bus
     ConfigureServices.AddEventBus(builder);
 
+    // Services
     builder.Services.AddTransient<IFileService, GoogleDriveFileService>();
 
+    // Repositories
+    builder.Services.AddScoped<IRepository<CourseLanguage>, CourseLanguageRepository>();
+    builder.Services.AddScoped<IRepository<Course>, CourseRepository>();
+    builder.Services.AddScoped<IRepository<CourseRequirement>, CourseRequirementRepository>();
+    builder.Services.AddScoped<IRepository<CourseSubtitle>, CourseSubtitleRepository>();
+    builder.Services.AddScoped<IRepository<Creator>, CreatorRepository>();
+    builder.Services.AddScoped<IRepository<GainedSkill>, GainedSkillRepository>();
+    builder.Services.AddScoped<IRepository<Language>, LanguageRepository>();
+    builder.Services.AddScoped<IRepository<Skill>, SkillRepository>();
+
+    // Handlers
     builder.Services.AddTransient<UserEmailChangedIntegrationEventHandler>();
     builder.Services.AddTransient<UserNameChangedIntegrationEventHandler>();
     builder.Services.AddTransient<CreatorRegisteredIntegrationEventHandler>();

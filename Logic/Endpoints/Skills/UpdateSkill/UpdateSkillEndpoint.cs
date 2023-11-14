@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
@@ -12,32 +12,31 @@ namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
             Roles("ADMIN");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Skill> repository;
 
-        public UpdateSkillEndpoint(CourseDbContext courseDbContext)
+        public UpdateSkillEndpoint(IRepository<Skill> repository)
         {
-            this.courseDbContext = courseDbContext;
+            this.repository = repository;
         }
 
         public override async Task HandleAsync(UpdateSkillRequest req, CancellationToken ct)
         {
-            Skill? skill = courseDbContext.Skills.Where(x => x.Id == req.Id).FirstOrDefault();
+            Skill? skill = repository.Get(req.Id);
             if (skill == null)
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
-            if (skill.Name != req.Name && courseDbContext.Skills.Where(x => x.Name == req.Name).Any())
+            if (skill.Name != req.Name && repository.GetAll().Where(x => x.Name == req.Name).Any())
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
 
             skill = Map.UpdateEntity(req, skill);
-            var res = courseDbContext.Skills.Update(skill);
-            courseDbContext.SaveChanges();
+            var res = repository.Update(skill);
 
-            Response = Map.FromEntity(res.Entity);
+            Response = Map.FromEntity(res);
             await SendOkAsync(Response, ct);
         }
     }

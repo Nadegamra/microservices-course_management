@@ -1,5 +1,5 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
+using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
 namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementCreate
@@ -12,30 +12,34 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementC
             Roles("ADMIN", "CREATOR");
         }
 
-        private readonly CourseDbContext courseDbContext;
+        private readonly IRepository<Course> courseRepository;
+        private readonly IRepository<CourseRequirement> courseRequirementRepository;
 
-        public CourseRequirementCreateEndpoint(CourseDbContext courseDbContext)
+        public CourseRequirementCreateEndpoint(IRepository<Course> courseRepository, IRepository<CourseRequirement> courseRequirementRepository)
         {
-            this.courseDbContext = courseDbContext;
+            this.courseRepository = courseRepository;
+            this.courseRequirementRepository = courseRequirementRepository;
         }
 
         public override async Task HandleAsync(CourseRequirementCreateRequest req, CancellationToken ct)
         {
-            Course? course = courseDbContext.Courses.Where(x => x.Id == req.CourseId && x.UserId == req.UserId).FirstOrDefault();
+            Course? course = courseRepository.GetAll()
+                                .Where(x => x.Id == req.CourseId && x.UserId == req.UserId)
+                                .FirstOrDefault();
             if (course == null || (req.SkillId != null && req.CustomDescription != null && req.CustomDescription != ""))
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
-            if (req.SkillId != null && courseDbContext.CourseRequirements.Where(x => x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any())
+            if (req.SkillId != null && courseRequirementRepository.GetAll()
+                                        .Where(x => x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any())
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
 
             CourseRequirement requirement = Map.ToEntity(req);
-            courseDbContext.CourseRequirements.Add(requirement);
-            courseDbContext.SaveChanges();
+            courseRequirementRepository.Add(requirement);
 
             await SendOkAsync(ct);
         }
