@@ -22,10 +22,10 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourse
 
         public override async Task HandleAsync(GetCourseRequest req, CancellationToken ct)
         {
-            Claim? claim = User.Claims.Where(x => x.Type == "UserId").First();
+            Claim? claim = User.Claims.Where(x => x.Type == "UserId").FirstOrDefault();
             int? userId = claim != null ? int.Parse(claim.Value) : null;
             Course? course = repository.GetAll()
-                            .Where(x => x.Id == req.Id && !x.IsDeleted && (x.UserId == userId || !x.IsHidden))
+                            .Where(x => x.Id == req.Id && !x.IsDeleted && (x.UserId == (userId ?? -1) || !x.IsHidden))
                             .FirstOrDefault();
 
             if (course == null)
