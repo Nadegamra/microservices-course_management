@@ -23,11 +23,11 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourseCount
 
         public async override Task HandleAsync(GetCourseCountRequest req, CancellationToken ct)
         {
-            Claim? claim = User.Claims.Where(x => x.Type == "UserId").First();
+            Claim? claim = User.Claims.Where(x => x.Type == "UserId").FirstOrDefault();
             int? userId = claim != null ? int.Parse(claim.Value) : null;
 
             int count = repository.GetAll()
-                            .Where(x => !x.IsDeleted && (x.UserId == userId || !x.IsHidden))
+                            .Where(x => !x.IsDeleted && (x.UserId == (userId ?? -1) || !x.IsHidden))
                             .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$"))
                             .Count();
 

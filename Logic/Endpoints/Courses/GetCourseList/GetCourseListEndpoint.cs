@@ -23,11 +23,11 @@ namespace CourseManagement.Logic.Endpoints.Courses.GetCourseList
 
         public override async Task HandleAsync(GetCourseListRequest req, CancellationToken ct)
         {
-            Claim? claim = User.Claims.Where(x => x.Type == "UserId").First();
+            Claim? claim = User.Claims.Where(x => x.Type == "UserId").FirstOrDefault();
             int? userId = claim != null ? int.Parse(claim.Value) : null;
             Course[] courses = repository.GetAll()
                     .Take(req.Take).Skip(req.Skip)
-                    .Where(x => !x.IsDeleted && (x.UserId == userId || !x.IsHidden))
+                    .Where(x => !x.IsDeleted && (x.UserId == (userId ?? -1) || !x.IsHidden))
                     .Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Phrase.ToLower())}).*$"))
                     .ToArray();
 
