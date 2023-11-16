@@ -36,11 +36,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
                 UserId = Response.UserId
             });
 
-<<<<<<< Updated upstream
-            await SendOkAsync(Response);
-=======
             await SendCreatedAtAsync($"courses/{res.Id}", null, Response, false, ct);
->>>>>>> Stashed changes
         }
     }
 }
