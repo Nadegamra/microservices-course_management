@@ -11,7 +11,7 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
         {
             Get("courses/{courseId}/image");
             AllowAnonymous();
-            Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromHours(2))));
+            // Options(x => x.CacheOutput(p => p.Expire(TimeSpan.FromHours(2))));
         }
 
         private readonly IRepository<Course> repository;
