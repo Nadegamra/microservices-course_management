@@ -11,11 +11,11 @@
     {
       "name": string
       "shortDescription": string
-      "detailedDescription: string
-      "lengthInDays: int
+      "detailedDescription": string
+      "lengthInDays": int
       "price": decimal
-      "grantsCertificate: bool
-      "certificatePrice: decimal
+      "grantsCertificate": bool
+      "certificatePrice": decimal
       "activityFormat": ActivityFormat
       "scheduleType": ScheduleType
       "difficulty": Difficulty
@@ -28,18 +28,18 @@
       "userId": int
       "name": string
       "shortDescription": string
-      "detailedDescription: string
-      "lengthInDays: int
+      "detailedDescription": string
+      "lengthInDays": int
       "price": decimal
-      "grantsCertificate: bool
-      "certificatePrice: decimal
+      "grantsCertificate": bool
+      "certificatePrice": decimal
       "activityFormat": ActivityFormat
       "scheduleType": ScheduleType
       "difficulty": Difficulty
-      "requirements: CourseRequirement[]
-      "gainedSkills": GainedSkill[]
-      "languages": CourseLanguage[]
-      "subtitles": CourseSubtitle[]
+      "requirements": CourseRequirement[]?
+      "gainedSkills": GainedSkill[]?
+      "languages": CourseLanguage[]?
+      "subtitles": CourseSubtitle[]?
       "isHidden": bool
     }
 - **Sample Request:** `POST /courses`
@@ -109,15 +109,15 @@
       "userId": int
       "name": string
       "shortDescription": string
-      "detailedDescription: string
-      "lengthInDays: int
+      "detailedDescription": string
+      "lengthInDays": int
       "price": decimal
-      "grantsCertificate: bool
-      "certificatePrice: decimal
+      "grantsCertificate": bool
+      "certificatePrice": decimal
       "activityFormat": ActivityFormat
       "scheduleType": ScheduleType
       "difficulty": Difficulty
-      "requirements: CourseRequirement[]
+      "requirements": CourseRequirement[]
       "gainedSkills": GainedSkill[]
       "languages": CourseLanguage[]
       "subtitles": CourseSubtitle[]
@@ -148,7 +148,7 @@
       ```
     - Course not found: `404 Not Found`
 ### Get Course List
-- **Short Description:** Gets a course list. Hidden courses are returned if requested by the owner
+- **Short Description:** Gets course list. Hidden courses are returned if requested by the owner
 - **URL:** `/courses`
 - **Method:** `GET`
 - **Require Authorization:** `optional`
@@ -165,21 +165,22 @@
           "userId": int
           "name": string
           "shortDescription": string
-          "detailedDescription: string
-          "lengthInDays: int
+          "detailedDescription": string
+          "lengthInDays": int
           "price": decimal
-          "grantsCertificate: bool
-          "certificatePrice: decimal
+          "grantsCertificate": bool
+          "certificatePrice": decimal
           "activityFormat": ActivityFormat
           "scheduleType": ScheduleType
           "difficulty": Difficulty
-          "requirements: CourseRequirement[]
+          "requirements": CourseRequirement[]
           "gainedSkills": GainedSkill[]
           "languages": CourseLanguage[]
           "subtitles": CourseSubtitle[]
           "isHidden": bool
         }
     ]
+    ```
 - **Sample Request:** `GET /courses?phrase=example&skip=10&take=5`
 - **Response Codes:**
   - Courses are returned successfully: `200 Ok`
@@ -206,4 +207,108 @@
       ]
       ```
 ### Get Course Count
+- **Short Description:** Gets a course count given search phrase
+- **URL:** `/courses/count`
+- **Method:** `GET`
+- **Require Authorization:** `optional`
+- **Authorized Roles:** `CREATOR`
+- **Request Type:**
+    - `phrase`: string
+- **Response Type:**
+    ```javascript
+    {
+        "count": int
+    }
+    ```
+- **Sample Request:** `GET /courses/count?phrase=example`
+- **Response Codes:**
+  - Courses are returned successfully: `200 Ok`
+    - **Sample Response:**
+      ```json
+      {
+        "count": 15
+      }
+      ```
 ### Update Course
+- **Short Description:** Creates a new course
+- **URL:** `/courses`
+- **Method:** `PUT`
+- **Require Authorization:** `true`
+- **Authorized Roles:** `CREATOR`
+- **Request Type:**
+    ```javascript
+    {
+        "id": int
+        "name": string?
+        "shortDescription": string?
+        "detailedDescription": string?
+        "lengthInDays": int?
+        "price": decimal?
+        "grantsCertificate": bool?
+        "certificatePrice": decimal?
+        "activityFormat": ActivityFormat?
+        "scheduleType": ScheduleType?
+        "difficulty": Difficulty?
+        "isHidden": bool?
+    }
+    ```
+- **Response Type:**
+    ```javascript
+    {
+      "id": int
+      "userId": int
+      "name": string
+      "shortDescription": string
+      "detailedDescription": string
+      "lengthInDays": int
+      "price": decimal
+      "grantsCertificate": bool
+      "certificatePrice": decimal
+      "activityFormat": ActivityFormat
+      "scheduleType": ScheduleType
+      "difficulty": Difficulty
+      "requirements": CourseRequirement[]?
+      "gainedSkills": GainedSkill[]?
+      "languages": CourseLanguage[]?
+      "subtitles": CourseSubtitle[]?
+      "isHidden": bool
+    }
+- **Sample Request:** `POST /courses`
+  ```json
+    {
+      "name": "Example course"
+      "shortDescription": "Short desc"
+      "detailedDescription": "Long description"
+      "lengthInDays": "15"
+      "price": "19.99"
+      "grantsCertificate": false
+      "certificatePrice": 0
+      "activityFormat": "2"
+      "scheduleType": "1"
+      "difficulty": "0"
+    }  
+  ```
+- **Response Codes:**
+  - Course successfully created: `200 Ok`
+    - **Sample Response:**
+      ```json
+      {
+          "id": 3,
+          "userId": 2,
+          "name": "Example course",
+          "shortDescription": "Short desc",
+          "detailedDescription": "Long description",
+          "lengthInDays": 15,
+          "price": 19.99,
+          "grantsCertificate": false,
+          "certificatePrice": 0,
+          "activityFormat": "Mixed",
+          "scheduleType": "Flexible",
+          "difficulty": "Beginner",
+          "requirements": null,
+          "gainedSkills": null,
+          "languages": null,
+          "subtitles": null,
+          "isHidden": false
+      ```
+    - Course not found: `404 Not Found`
