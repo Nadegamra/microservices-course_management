@@ -24,12 +24,12 @@ namespace CourseManagement.Logic.Endpoints.Skills.DeleteSkill
             Skill? skill = repository.Get(req.Id);
             if (skill == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 
             repository.Delete(skill);
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

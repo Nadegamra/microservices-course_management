@@ -24,14 +24,20 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillDelete
         public override async Task HandleAsync(GainedSkillDeleteRequest req, CancellationToken ct)
         {
             GainedSkill? skill = gainedSkillsRepository.Get(req.Id);
-            if (skill == null || !courseRepository.GetAll().Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
+            if (skill == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
+                return;
+            }
+            bool notOwner = !courseRepository.GetAll().Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any();
+            if (notOwner)
+            {
+                await SendUnauthorizedAsync(ct);
                 return;
             }
 
             gainedSkillsRepository.Delete(skill);
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

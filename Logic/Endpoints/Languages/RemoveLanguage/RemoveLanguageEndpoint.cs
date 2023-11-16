@@ -22,11 +22,13 @@ namespace CourseManagement.Logic.Endpoints.Languages.RemoveLanguage
         public override async Task HandleAsync(RemoveLanguageRequest req, CancellationToken ct)
         {
             Language? language = repository.Get(req.Id);
-            if (language != null)
+            if (language == null)
             {
-                repository.Delete(language);
+                await SendNotFoundAsync(ct);
+                return;
             }
-            await SendOkAsync(ct);
+            repository.Delete(language);
+            await SendNoContentAsync(ct);
         }
     }
 }

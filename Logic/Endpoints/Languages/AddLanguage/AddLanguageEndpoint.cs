@@ -21,15 +21,17 @@ namespace CourseManagement.Logic.Endpoints.Languages.AddLanguage
 
         public override async Task HandleAsync(AddLanguageRequest req, CancellationToken ct)
         {
-            List<Language> languages = repository.GetAll().Where(x => x.Name.ToUpper() == req.Name.ToUpper()).ToList();
+            List<Language> languages = repository.GetAll().Where(x => x.Name.ToUpper() == req.Name.ToUpper()).ToList();// language already exists
             if (languages.Count > 0)
             {
-                await SendErrorsAsync(400, ct);
+                await SendErrorsAsync(409, ct);
                 return;
             }
 
             Language newLanguage = Map.ToEntity(req);
             repository.Add(newLanguage);
+
+            await SendNoContentAsync(ct);
         }
     }
 }

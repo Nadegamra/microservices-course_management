@@ -24,12 +24,13 @@ namespace CourseManagement.Logic.Endpoints.Skills.UpdateSkill
             Skill? skill = repository.Get(req.Id);
             if (skill == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
-            if (skill.Name != req.Name && repository.GetAll().Where(x => x.Name == req.Name).Any())
+            bool alreadyExists = skill.Name != req.Name && repository.GetAll().Where(x => x.Name == req.Name).Any();
+            if (alreadyExists)
             {
-                await SendErrorsAsync(400, ct);
+                await SendErrorsAsync(409, ct);
                 return;
             }
 

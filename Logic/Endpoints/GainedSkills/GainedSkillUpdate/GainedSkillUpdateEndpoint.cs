@@ -24,9 +24,15 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillUpdate
         public override async Task HandleAsync(GainedSkillUpdateRequest req, CancellationToken ct)
         {
             GainedSkill? skill = gainedSkillsRepository.GetAll().Where(x => x.Id == req.Id && x.SkillId == null).FirstOrDefault();
-            if (skill == null || !courseRepository.GetAll().Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any())
+            if (skill == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
+                return;
+            }
+            bool isNotOwner = !courseRepository.GetAll().Where(x => x.Id == skill.CourseId && x.UserId == req.UserId).Any();
+            if (isNotOwner)
+            {
+                await SendUnauthorizedAsync(ct);
                 return;
             }
 

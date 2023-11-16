@@ -27,15 +27,16 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleCreate
             Course? course = courseRepository.GetAll()
                             .Where(x => x.Id == newSubtitle.CourseId && x.UserId == req.UserId)
                             .FirstOrDefault();
-            if (course == null || courseSubtitleRepository.GetAll().Where(x => x.Language == newSubtitle.Language && x.CourseId == newSubtitle.CourseId).Any())
+            var alreadyExists = courseSubtitleRepository.GetAll().Where(x => x.Language == newSubtitle.Language && x.CourseId == newSubtitle.CourseId).Any();
+            if (course == null || alreadyExists)
             {
-                await SendErrorsAsync(400, ct);
+                await SendErrorsAsync(409, ct);
                 return;
             }
 
             courseSubtitleRepository.Add(newSubtitle);
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

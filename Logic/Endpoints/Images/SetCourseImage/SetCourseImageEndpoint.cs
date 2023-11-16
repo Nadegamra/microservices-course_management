@@ -29,7 +29,7 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
             string imageId;
             if (course == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
             if (course.ImageId.Length == 0)
@@ -49,7 +49,7 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
 
                 await task2;
             }
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

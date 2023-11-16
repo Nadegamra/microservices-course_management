@@ -27,12 +27,12 @@ namespace CourseManagement.Logic.Endpoints.Courses.DeleteCourse
             Course? course = repository.Get(req.Id);
             if (course == null || course.UserId != req.UserId)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 
             course.IsDeleted = true;
-            var res = repository.Update(course);
+            repository.Update(course);
 
             eventBus.Publish(new CourseCreatedIntegrationEvent()
             {

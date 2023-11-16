@@ -26,22 +26,24 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementC
             Course? course = courseRepository.GetAll()
                                 .Where(x => x.Id == req.CourseId && x.UserId == req.UserId)
                                 .FirstOrDefault();
-            if (course == null || (req.SkillId != null && req.CustomDescription != null && req.CustomDescription != ""))
+            bool badRequest = req.SkillId != null && req.CustomDescription != null && req.CustomDescription != "";
+            if (course == null || badRequest)
             {
                 await SendErrorsAsync(400, ct);
                 return;
             }
-            if (req.SkillId != null && courseRequirementRepository.GetAll()
-                                        .Where(x => x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any())
+            bool courseAlreadyHasSkill = courseRequirementRepository.GetAll()
+                                        .Where(x => x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any();
+            if (req.SkillId != null && courseAlreadyHasSkill)
             {
-                await SendErrorsAsync(400, ct);
+                await SendErrorsAsync(409, ct);
                 return;
             }
 
             CourseRequirement requirement = Map.ToEntity(req);
             courseRequirementRepository.Add(requirement);
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

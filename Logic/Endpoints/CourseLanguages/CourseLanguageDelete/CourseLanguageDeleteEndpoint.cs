@@ -31,13 +31,13 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageDelete
                                 .FirstOrDefault();
             if (course == null || language == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 
             courseLanguageRepository.Delete(language);
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

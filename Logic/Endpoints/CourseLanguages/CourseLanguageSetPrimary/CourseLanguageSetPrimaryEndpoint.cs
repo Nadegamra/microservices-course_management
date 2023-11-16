@@ -22,6 +22,12 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageSetPrim
         public override async Task HandleAsync(CourseLanguageSetPrimaryRequest req, CancellationToken ct)
         {
             List<CourseLanguage> languages = repository.GetAll().Where(x => x.CourseId == req.CourseId).ToList();
+            bool newPrimaryExists = languages.Where(x => languages.Select(x => x.Id).Contains(req.Id)).Any();
+            if (!newPrimaryExists)
+            {
+                await SendNotFoundAsync(ct);
+                return;
+            }
             foreach (var language in languages)
             {
                 if (language.Id != req.Id)
@@ -34,7 +40,7 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageSetPrim
                 }
                 repository.Update(language);
             }
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

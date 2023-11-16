@@ -32,14 +32,14 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementU
 
             if (course == null || requirement == null || requirement.SkillId != null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 
             requirement = Map.UpdateEntity(req, requirement);
             courseRequirementRepository.Update(requirement);
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }
