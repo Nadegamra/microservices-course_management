@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleCreate
         public override void Configure()
         {
             Post("courses/{courseId}/subtitles");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> courseRepository;

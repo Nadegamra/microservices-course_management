@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.Creators.UpdateCreator
         public override void Configure()
         {
             Put("creator");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Creator> repository;

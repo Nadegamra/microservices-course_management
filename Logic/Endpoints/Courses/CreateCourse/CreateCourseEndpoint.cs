@@ -10,7 +10,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
         public override void Configure()
         {
             Post("courses");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> repository;
@@ -36,7 +36,11 @@ namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
                 UserId = Response.UserId
             });
 
+<<<<<<< Updated upstream
             await SendOkAsync(Response);
+=======
+            await SendCreatedAtAsync($"courses/{res.Id}", null, Response, false, ct);
+>>>>>>> Stashed changes
         }
     }
 }

@@ -10,7 +10,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
         public override void Configure()
         {
             Put("courses/{id}");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> repository;

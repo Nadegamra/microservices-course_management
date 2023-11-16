@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageDelete
         public override void Configure()
         {
             Delete("courses/{courseId}/languages/{id}");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> courseRepository;

@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillDelete
         public override void Configure()
         {
             Delete("courses/{courseId}/gained/{id}");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> courseRepository;

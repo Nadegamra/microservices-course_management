@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementC
         public override void Configure()
         {
             Post("courses/{courseId}/requirements");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> courseRepository;

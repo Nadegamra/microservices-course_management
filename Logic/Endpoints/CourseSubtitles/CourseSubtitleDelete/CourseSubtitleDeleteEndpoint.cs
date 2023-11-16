@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleDelete
         public override void Configure()
         {
             Delete("courses/{courseId}/subtitles/{id}");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> courseRepository;

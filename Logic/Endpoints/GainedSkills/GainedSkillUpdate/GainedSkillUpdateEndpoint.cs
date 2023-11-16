@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillUpdate
         public override void Configure()
         {
             Put("courses/{courseId}/gained/{id}");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> courseRepository;

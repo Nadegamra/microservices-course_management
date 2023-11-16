@@ -10,7 +10,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.DeleteCourse
         public override void Configure()
         {
             Delete("courses/{id}");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<Course> repository;

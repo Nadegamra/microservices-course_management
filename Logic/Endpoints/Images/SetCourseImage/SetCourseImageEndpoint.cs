@@ -10,7 +10,7 @@ namespace CourseManagement.Logic.Endpoints.Images.AddCourseImage
         public override void Configure()
         {
             Put("courses/{courseId}/image");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
             AllowFileUploads();
         }
 

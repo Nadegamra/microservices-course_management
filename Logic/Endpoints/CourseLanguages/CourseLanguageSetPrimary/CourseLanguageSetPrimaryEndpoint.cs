@@ -9,7 +9,7 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageSetPrim
         public override void Configure()
         {
             Put("courses/{courseId}/languages/{id}");
-            Roles("ADMIN", "CREATOR");
+            Roles("CREATOR");
         }
 
         private readonly IRepository<CourseLanguage> repository;
