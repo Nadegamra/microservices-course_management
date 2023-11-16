@@ -24,7 +24,7 @@ namespace CourseManagement.Logic.Endpoints.Languages.GetLanguageSuggestions
         {
             if (req.Name == "")
             {
-                await SendOkAsync(ct);
+                await SendNoContentAsync(ct);
                 return;
             }
             List<Language> languages = repository.GetAll().Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Name.ToLower())}).*$")).Take(5).ToList();

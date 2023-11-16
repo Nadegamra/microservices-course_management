@@ -24,14 +24,14 @@ namespace CourseManagement.Logic.Endpoints.Creators.UpdateCreator
             Creator? original = repository.Get(req.UserId);
             if (original == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 
             Creator updated = Map.UpdateEntity(req, original);
             repository.Update(updated);
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

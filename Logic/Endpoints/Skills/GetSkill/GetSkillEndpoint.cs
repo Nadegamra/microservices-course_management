@@ -24,7 +24,7 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkill
             Skill? skill = repository.Get(req.Id);
             if (skill == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 

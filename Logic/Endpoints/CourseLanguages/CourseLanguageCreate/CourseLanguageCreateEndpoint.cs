@@ -27,12 +27,13 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageCreate
             Course? course = courseRepository.GetAll().Where(x => x.Id == newLanguage.CourseId && x.UserId == req.UserId).FirstOrDefault();
             if (course == null)
             {
-                await SendUnauthorizedAsync(ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
-            if (courseLanguageRepository.GetAll().Where(x => x.Language == newLanguage.Language && x.CourseId == newLanguage.CourseId).Any())
+            bool languageAlreadyAdded = courseLanguageRepository.GetAll().Where(x => x.Language == newLanguage.Language && x.CourseId == newLanguage.CourseId).Any();
+            if (languageAlreadyAdded)
             {
-                await SendErrorsAsync(400, ct);
+                await SendErrorsAsync(409, ct);
                 return;
             }
 
@@ -42,7 +43,7 @@ namespace CourseManagement.Logic.Endpoints.CourseLanguages.CourseLanguageCreate
 
             courseLanguageRepository.Add(newLanguage);
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

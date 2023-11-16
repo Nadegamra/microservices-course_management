@@ -24,7 +24,7 @@ namespace CourseManagement.Logic.Endpoints.Creators.Profile
             Creator? creator = repository.Get(req.UserId);
             if (creator == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 

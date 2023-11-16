@@ -36,7 +36,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.CreateCourse
                 UserId = Response.UserId
             });
 
-            await SendOkAsync(Response);
+            await SendOkAsync(Response, ct);
         }
     }
 }

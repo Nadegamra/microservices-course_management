@@ -28,13 +28,13 @@ namespace CourseManagement.Logic.Endpoints.CourseSubtitles.CourseSubtitleDelete
             CourseSubtitle? subtitle = courseSubtitleRepository.GetAll().Where(x => x.Id == req.Id && x.CourseId == req.CourseId).FirstOrDefault();
             if (course == null || subtitle == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 
             courseSubtitleRepository.Delete(subtitle);
 
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
         }
     }
 }

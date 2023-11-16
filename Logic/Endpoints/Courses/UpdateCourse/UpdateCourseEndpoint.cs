@@ -29,7 +29,7 @@ namespace CourseManagement.Logic.Endpoints.Courses.UpdateCourse
                                 .FirstOrDefault();
             if (original == null)
             {
-                await SendErrorsAsync(418, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 

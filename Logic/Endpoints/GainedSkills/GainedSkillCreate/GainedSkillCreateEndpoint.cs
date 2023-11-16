@@ -1,5 +1,4 @@
-﻿using CourseManagement.Data;
-using CourseManagement.Data.Models;
+﻿using CourseManagement.Data.Models;
 using CourseManagement.Data.Repositories;
 using FastEndpoints;
 
@@ -24,12 +23,22 @@ namespace CourseManagement.Logic.Endpoints.GainedSkills.GainedSkillCreate
 
         public override async Task HandleAsync(GainedSkillCreateRequest req, CancellationToken ct)
         {
-            if (!courseRepository.GetAll().Where(x => x.Id == req.CourseId && x.UserId == req.UserId).Any() ||
-                gainedSkillsRepository.GetAll().Where(x => req.SkillId != null && x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any()
-                || (req.SkillId != null && req.CustomDescription != null && req.CustomDescription != ""))
+            bool notOwner = !courseRepository.GetAll().Where(x => x.Id == req.CourseId && x.UserId == req.UserId).Any();
+            if (notOwner)
+            {
+                await SendUnauthorizedAsync(ct);
+                return;
+            }
+            bool alreadyExists = gainedSkillsRepository.GetAll().Where(x => req.SkillId != null && x.SkillId == req.SkillId && x.CourseId == req.CourseId).Any();
+            if (alreadyExists)
+            {
+                await SendErrorsAsync(409, ct);
+                return;
+            }
+            bool badRequest = req.SkillId != null && req.CustomDescription != null && req.CustomDescription != "";
+            if (badRequest)
             {
                 await SendErrorsAsync(400, ct);
-                return;
             }
 
             GainedSkill gainedSkill = Map.ToEntity(req);

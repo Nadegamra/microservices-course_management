@@ -25,7 +25,7 @@ namespace CourseManagement.Logic.Endpoints.Skills.GetSkillSuggestions
         {
             if (req.Name == "")
             {
-                await SendOkAsync(ct);
+                await SendNoContentAsync(ct);
                 return;
             }
             List<Skill> skills = repository.GetAll().Where(x => Regex.IsMatch(x.Name.ToLower(), $@"^.*({Regex.Escape(req.Name.ToLower())}).*$")).Take(5).ToList();

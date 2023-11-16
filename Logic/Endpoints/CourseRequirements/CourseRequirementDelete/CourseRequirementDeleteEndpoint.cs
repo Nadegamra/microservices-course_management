@@ -31,12 +31,12 @@ namespace CourseManagement.Logic.Endpoints.CourseRequirements.CourseRequirementD
                                                 .FirstOrDefault();
             if (course == null || requirement == null)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
 
             courseRequirementRepository.Delete(requirement);
-            await SendOkAsync(ct);
+            await SendNoContentAsync(ct);
 
         }
     }
