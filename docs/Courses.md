@@ -231,14 +231,14 @@
       ```
 ### Update Course
 - **Short Description:** Creates a new course
-- **URL:** `/courses`
+- **URL:** `/courses/{id}`
 - **Method:** `PUT`
 - **Require Authorization:** `true`
 - **Authorized Roles:** `CREATOR`
 - **Request Type:**
+    - `id`: int 
     ```javascript
     {
-        "id": int
         "name": string?
         "shortDescription": string?
         "detailedDescription": string?
@@ -273,7 +273,7 @@
       "subtitles": CourseSubtitle[]?
       "isHidden": bool
     }
-- **Sample Request:** `POST /courses`
+- **Sample Request:** `POST /courses/5`
   ```json
     {
       "name": "Example course"
@@ -285,7 +285,8 @@
       "certificatePrice": 0
       "activityFormat": "2"
       "scheduleType": "1"
-      "difficulty": "0"
+      "difficulty": "0",
+      "isHidden": false
     }  
   ```
 - **Response Codes:**
