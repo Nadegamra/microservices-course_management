@@ -28,7 +28,7 @@ namespace CourseManagement.Logic.Endpoints.Images.GetCourseImage
             Course? course = repository.Get(req.CourseId);
             if (course == null || course.ImageId.Length == 0)
             {
-                await SendErrorsAsync(400, ct);
+                await SendNotFoundAsync(ct);
                 return;
             }
             try
