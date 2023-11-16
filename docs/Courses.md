@@ -42,6 +42,7 @@
       "subtitles": CourseSubtitle[]?
       "isHidden": bool
     }
+    ```
 - **Sample Request:** `POST /courses`
   ```json
     {
@@ -123,6 +124,7 @@
       "subtitles": CourseSubtitle[]
       "isHidden": bool
     }
+    ```
 - **Sample Request:** `GET /courses/10`
 - **Response Codes:**
   - Course successfully created: `200 Ok`
@@ -273,6 +275,7 @@
       "subtitles": CourseSubtitle[]?
       "isHidden": bool
     }
+    ```
 - **Sample Request:** `POST /courses/5`
   ```json
     {
