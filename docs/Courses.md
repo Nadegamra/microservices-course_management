@@ -82,6 +82,8 @@
           "isHidden": true
       }
       ```
+    - Unauthorized User: `401 Unauthorized`
+    - Malformed request: `400 Bad Request`
 ### Delete Course
 - **Short Description:** Deletes specified course
 - **URL:** `/courses/{id}`
@@ -94,7 +96,7 @@
 - **Sample Request:** `DELETE /courses/15`
 - **Response Codes:**
   - Course deleted successfully: `204 No Content`
-  - Course not found: `404 Not Found` 
+  - Course not found or unauthorized: `404 Not Found`
 ### Get Course
 - **Short Description:** Gets a course, hidden courses are returned if requested by the owner
 - **URL:** `/courses/{id}`
